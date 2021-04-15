@@ -1,0 +1,12 @@
+{
+  "modmenu.descriptionTranslation.axesareweapons": "Entfernt den erhöhten Haltbarkeitsverlust im Kampf und erlaubt Plünderung für Äxte",
+  "text.autoconfig.axesareweapons.option.enableLooting": "Erlaube Plünderung auf Äxten",
+  "text.autoconfig.axesareweapons.option.enableKnockback": "Erlaube Rückstoß auf Äxten",
+  "text.autoconfig.axesareweapons.option.enableFireAspect": "Erlaube Verbrennung auf Äxten",
+  "text.autoconfig.axesareweapons.option.enableLooting.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
+  "text.autoconfig.axesareweapons.option.enableLooting.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
+  "text.autoconfig.axesareweapons.option.enableKnockback.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
+  "text.autoconfig.axesareweapons.option.enableKnockback.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
+  "text.autoconfig.axesareweapons.option.enableFireAspect.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
+  "text.autoconfig.axesareweapons.option.enableFireAspect.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird"
+}

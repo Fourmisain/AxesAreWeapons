@@ -1,6 +1,5 @@
 package fourmisain.axesareweapons.mixin;
 
-
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.AxeItem;
