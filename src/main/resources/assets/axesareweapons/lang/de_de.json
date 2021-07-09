@@ -1,0 +1,17 @@
+{
+  "modmenu.descriptionTranslation.axesareweapons": "Entfernt den erhöhten Haltbarkeitsverlust im Kampf und erlaubt Plünderung für Äxte",
+  "text.autoconfig.axesareweapons.option.enableLooting": "Erlaube Plünderung auf Äxten (via Amboss)",
+  "text.autoconfig.axesareweapons.option.enableKnockback": "Erlaube Rückstoß auf Äxten (via Amboss)",
+  "text.autoconfig.axesareweapons.option.enableFireAspect": "Erlaube Verbrennung auf Äxten (via Amboss)",
+  "text.autoconfig.axesareweapons.option.enableForEnchantingTable": "Erlaube obiges auch im Zaubertisch",
+  "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable": "Erlaube Schadensverzauberungen für Äxte im Zaubertisch",
+  "text.autoconfig.axesareweapons.option.enableLooting.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
+  "text.autoconfig.axesareweapons.option.enableLooting.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
+  "text.autoconfig.axesareweapons.option.enableKnockback.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
+  "text.autoconfig.axesareweapons.option.enableKnockback.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
+  "text.autoconfig.axesareweapons.option.enableFireAspect.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
+  "text.autoconfig.axesareweapons.option.enableFireAspect.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
+  "text.autoconfig.axesareweapons.option.enableForEnchantingTable.@Tooltip": "Ansonsten müssen Bücher benutzt werden",
+  "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable.@Tooltip[0]": "Namentlich: Schärfe, Bann and Nemesis der Gliederfüßer",
+  "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable.@Tooltip[1]": "(Diese können immer durch Bücher übertragen werden)"
+}

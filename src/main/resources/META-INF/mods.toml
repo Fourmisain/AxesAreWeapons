@@ -1,0 +1,38 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+issueTrackerURL="https://github.com/Fourmisain/AxesAreWeapons/issues"
+
+[[mods]]
+modId="axesareweapons"
+version="${file.jarVersion}"
+displayName="Axes Are Weapons"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/axes-are-weapons"
+logoFile="icon.png"
+authors="Fourmisain"
+description='''
+Disables the increased durability loss in combat and enables Looting for axes
+Damage enchantments for axes will appear in the Enchanting Table too
+Check the config for more options
+'''
+
+[[dependencies.axesareweapons]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.axesareweapons]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.axesareweapons]]
+    modId="cloth-config"
+    mandatory=true
+    versionRange="[4.0.0,)"
+    ordering="NONE"
+    side="BOTH"
