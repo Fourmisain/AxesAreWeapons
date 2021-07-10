@@ -1,4 +1,4 @@
-package fourmisain.axesareweapons.config;
+package com.fourmisain.axesareweapons.config;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;

@@ -1,6 +1,5 @@
-package fourmisain.axesareweapons.mixin;
+package com.fourmisain.axesareweapons.mixin;
 
-import fourmisain.axesareweapons.AxesAreWeapons;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -16,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Arrays;
 import java.util.List;
 
-import static fourmisain.axesareweapons.AxesAreWeapons.CONFIG;
+import static com.fourmisain.axesareweapons.AxesAreWeapons.CONFIG;
 
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {

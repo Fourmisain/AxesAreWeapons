@@ -17,10 +17,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"fourmisain.axesareweapons.AxesAreWeapons"
+			"com.fourmisain.axesareweapons.AxesAreWeapons"
 		],
 		"modmenu": [
-			"fourmisain.axesareweapons.config.ModMenuImpl"
+			"com.fourmisain.axesareweapons.config.ModMenuImpl"
 		]
 	},
 	"mixins": [

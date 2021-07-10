@@ -1,4 +1,4 @@
-package fourmisain.axesareweapons.mixin;
+package com.fourmisain.axesareweapons.mixin;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static fourmisain.axesareweapons.AxesAreWeapons.CONFIG;
+import static com.fourmisain.axesareweapons.AxesAreWeapons.CONFIG;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
