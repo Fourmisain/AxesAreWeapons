@@ -1,11 +1,11 @@
 package com.fourmisain.axesareweapons.mixin;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.*;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static com.fourmisain.axesareweapons.AxesAreWeapons.CONFIG;
 
@@ -34,6 +35,18 @@ public class EnchantmentHelperMixin {
 				if (CONFIG.enableLooting)    addEntry(entries, power, Enchantments.MOB_LOOTING);
 				if (CONFIG.enableKnockback)  addEntry(entries, power, Enchantments.KNOCKBACK);
 				if (CONFIG.enableFireAspect) addEntry(entries, power, Enchantments.FIRE_ASPECT);
+
+				if (CONFIG.enableModded) {
+					// add all modded sword enchantments (for now)
+					for (ResourceLocation id : ForgeRegistries.ENCHANTMENTS.getKeys()) {
+						if (!id.getNamespace().equals("minecraft")) {
+							Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(id);
+							if (enchantment.category.equals(EnchantmentType.WEAPON)) {
+								addEntry(entries, power, enchantment);
+							}
+						}
+					}
+				}
 			}
 		}
 	}
