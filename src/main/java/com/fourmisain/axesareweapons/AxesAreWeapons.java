@@ -1,6 +1,6 @@
-package fourmisain.axesareweapons;
+package com.fourmisain.axesareweapons;
 
-import fourmisain.axesareweapons.config.Configuration;
+import com.fourmisain.axesareweapons.config.Configuration;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;

@@ -1,4 +1,4 @@
-package fourmisain.axesareweapons.config;
+package com.fourmisain.axesareweapons.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
