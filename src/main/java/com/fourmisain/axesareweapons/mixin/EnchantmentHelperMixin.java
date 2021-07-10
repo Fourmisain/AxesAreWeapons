@@ -1,11 +1,10 @@
 package com.fourmisain.axesareweapons.mixin;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
-import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.*;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static com.fourmisain.axesareweapons.AxesAreWeapons.CONFIG;
 
@@ -34,6 +34,18 @@ public class EnchantmentHelperMixin {
 				if (CONFIG.enableLooting)    addEntry(entries, power, Enchantments.LOOTING);
 				if (CONFIG.enableKnockback)  addEntry(entries, power, Enchantments.KNOCKBACK);
 				if (CONFIG.enableFireAspect) addEntry(entries, power, Enchantments.FIRE_ASPECT);
+
+				if (CONFIG.enableModded) {
+					// add all modded sword enchantments (for now)
+					for (Identifier id : Registry.ENCHANTMENT.getIds()) {
+						if (!id.getNamespace().equals("minecraft")) {
+							Optional<Enchantment> enchantment = Registry.ENCHANTMENT.getOrEmpty(id);
+							if (enchantment.isPresent() && enchantment.get().type.equals(EnchantmentTarget.WEAPON)) {
+								addEntry(entries, power, enchantment.get());
+							}
+						}
+					}
+				}
 			}
 		}
 	}
