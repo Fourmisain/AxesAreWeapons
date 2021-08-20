@@ -3,11 +3,12 @@ package com.fourmisain.axesareweapons;
 import com.fourmisain.axesareweapons.config.Configuration;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmlclient.ConfigGuiHandler;
 
 @Mod(AxesAreWeapons.MOD_ID)
 public class AxesAreWeapons {
@@ -17,8 +18,8 @@ public class AxesAreWeapons {
     public AxesAreWeapons() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
-            () -> (client, parent) -> AutoConfig.getConfigScreen(Configuration.class, parent).get());
+        ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class,
+            () -> new ConfigGuiHandler.ConfigGuiFactory((client, parent) -> AutoConfig.getConfigScreen(Configuration.class, parent).get()));
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
