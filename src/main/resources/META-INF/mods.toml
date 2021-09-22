@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[36,)"
+loaderVersion="[35,)"
 license="MIT"
 issueTrackerURL="https://github.com/Fourmisain/AxesAreWeapons/issues"
 
@@ -19,14 +19,14 @@ Check the config for more options
 [[dependencies.axesareweapons]]
     modId="forge"
     mandatory=true
-    versionRange="[36,)"
+    versionRange="[35,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.axesareweapons]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5,1.17)"
+    versionRange="[1.16.4,1.17)"
     ordering="NONE"
     side="BOTH"
 
