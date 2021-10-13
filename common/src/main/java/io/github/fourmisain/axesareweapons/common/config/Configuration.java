@@ -1,4 +1,4 @@
-package io.github.fourmisain.axesareweapons.forge.config;
+package io.github.fourmisain.axesareweapons.common.config;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;

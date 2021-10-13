@@ -1,4 +1,4 @@
-package io.github.fourmisain.axesareweapons.forge.mixin;
+package io.github.fourmisain.axesareweapons.common.mixin;
 
 import net.minecraft.enchantment.*;
 import net.minecraft.item.AxeItem;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static io.github.fourmisain.axesareweapons.forge.AxesAreWeapons.CONFIG;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
 
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {

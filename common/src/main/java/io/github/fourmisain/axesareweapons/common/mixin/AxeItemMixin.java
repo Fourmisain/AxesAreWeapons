@@ -1,4 +1,4 @@
-package io.github.fourmisain.axesareweapons.forge.mixin;
+package io.github.fourmisain.axesareweapons.common.mixin;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;

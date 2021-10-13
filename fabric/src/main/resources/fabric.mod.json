@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "axesareweapons",
+  "version": "${version}",
+  "name": "Axes Are Weapons",
+  "description": "Disables the increased durability loss in combat and enables Looting for axes",
+  "authors": [
+    "Fourmisain"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/axes-are-weapons",
+    "sources": "https://github.com/Fourmisain/AxesAreWeapons",
+    "issues": "https://github.com/Fourmisain/AxesAreWeapons/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/axesareweapons/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.fourmisain.axesareweapons.fabric.AxesAreWeapons"
+    ],
+    "modmenu": [
+      "io.github.fourmisain.axesareweapons.fabric.config.ModMenuImpl"
+    ]
+  },
+  "mixins": [
+    "axesareweapons.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": ">=1.17.0",
+    "cloth-config2": "*"
+  }
+}

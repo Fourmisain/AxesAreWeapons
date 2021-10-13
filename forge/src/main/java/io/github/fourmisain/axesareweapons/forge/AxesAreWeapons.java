@@ -1,7 +1,7 @@
 package io.github.fourmisain.axesareweapons.forge;
 
-//import dev.architectury.platform.forge.EventBuses;
-import io.github.fourmisain.axesareweapons.forge.config.Configuration;
+import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon;
+import io.github.fourmisain.axesareweapons.common.config.Configuration;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -10,16 +10,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
 
-@Mod(AxesAreWeapons.MOD_ID)
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
+
+@Mod(AxesAreWeaponsCommon.MOD_ID)
 public class AxesAreWeapons {
-	public static final String MOD_ID = "axesareweapons";
-
-	public static Configuration CONFIG;
-
 	public AxesAreWeapons() {
-		// Submit our event bus to let architectury register our content on the right time
-//		EventBuses.registerModEventBus(AxesAreWeapons.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
-
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 
 		ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class,
