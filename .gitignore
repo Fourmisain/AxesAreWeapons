@@ -1,6 +1,7 @@
 build/
 *.ipr
 run/
+minecraf/
 *.iws
 out/
 *.iml
