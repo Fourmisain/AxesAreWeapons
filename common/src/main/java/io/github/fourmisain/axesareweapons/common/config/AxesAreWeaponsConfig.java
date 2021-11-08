@@ -5,7 +5,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = "axesareweapons")
-public class Configuration implements ConfigData {
+public class AxesAreWeaponsConfig implements ConfigData {
 
 	@ConfigEntry.Gui.Tooltip(count = 2)
 	public boolean enableLooting = true;

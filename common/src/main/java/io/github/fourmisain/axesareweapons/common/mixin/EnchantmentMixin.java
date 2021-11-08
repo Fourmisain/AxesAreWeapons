@@ -17,7 +17,7 @@ import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CO
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
 	@Inject(method = "isAcceptableItem", at = @At("RETURN"), cancellable = true)
-	public void isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+	public void enableAxeEnchantments(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (cir.getReturnValue() || !(stack.getItem() instanceof AxeItem)) return;
 
 		Enchantment self = (Enchantment) (Object) this;

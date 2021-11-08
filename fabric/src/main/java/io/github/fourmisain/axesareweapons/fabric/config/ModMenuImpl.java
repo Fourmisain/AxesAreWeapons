@@ -2,7 +2,7 @@ package io.github.fourmisain.axesareweapons.fabric.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import io.github.fourmisain.axesareweapons.common.config.Configuration;
+import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,6 +11,6 @@ import net.fabricmc.api.Environment;
 public class ModMenuImpl implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> AutoConfig.getConfigScreen(Configuration.class, parent).get();
+        return parent -> AutoConfig.getConfigScreen(AxesAreWeaponsConfig.class, parent).get();
     }
 }

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MiningToolItem.class)
 public abstract class MiningToolItemMixin {
 	@Inject(method = "postHit", at = @At("HEAD"), cancellable = true)
-	public void handlePostHit(ItemStack stack, LivingEntity target, LivingEntity attacker, CallbackInfoReturnable<Boolean> cir) {
+	public void disableIncreasedDurabilityLoss(ItemStack stack, LivingEntity target, LivingEntity attacker, CallbackInfoReturnable<Boolean> cir) {
 		// overwritten by AxeItemMixin
 	}
 }

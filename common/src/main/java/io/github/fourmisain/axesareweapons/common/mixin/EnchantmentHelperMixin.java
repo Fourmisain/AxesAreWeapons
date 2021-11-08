@@ -18,9 +18,9 @@ import java.util.Optional;
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
 
 @Mixin(EnchantmentHelper.class)
-public class EnchantmentHelperMixin {
+public abstract class EnchantmentHelperMixin {
 	@Inject(method = "getPossibleEntries", at = @At("RETURN"))
-	private static void getPossibleEntries(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
+	private static void addAxeEnchantments(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
 		List<EnchantmentLevelEntry> entries = cir.getReturnValue();
 
 		if (stack.getItem() instanceof AxeItem) {
