@@ -5,6 +5,7 @@
   "text.autoconfig.axesareweapons.option.enableFireAspect": "Erlaube Verbrennung auf Äxten (via Amboss)",
   "text.autoconfig.axesareweapons.option.enableModded": "Erlaube gemoddete Schwertverzauberungen auf Äxten (via Amboss)",
   "text.autoconfig.axesareweapons.option.enableForEnchantingTable": "Erlaube obiges auch im Zaubertisch",
+  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting": "Behutsamkeit und Plünderung sind kombinierbar",
   "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable": "Erlaube Schadensverzauberungen für Äxte im Zaubertisch",
   "text.autoconfig.axesareweapons.option.enableLooting.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
   "text.autoconfig.axesareweapons.option.enableLooting.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
@@ -14,6 +15,8 @@
   "text.autoconfig.axesareweapons.option.enableFireAspect.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
   "text.autoconfig.axesareweapons.option.enableModded.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
   "text.autoconfig.axesareweapons.option.enableModded.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
+  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[0]": "Sobald die Verzauberungen auf einer Axt sind, bleiben",
+  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
   "text.autoconfig.axesareweapons.option.enableForEnchantingTable.@Tooltip": "Ansonsten müssen Bücher benutzt werden",
   "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable.@Tooltip[0]": "Namentlich: Schärfe, Bann and Nemesis der Gliederfüßer",
   "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable.@Tooltip[1]": "(Diese können immer durch Bücher übertragen werden)"

@@ -23,4 +23,7 @@ public class Configuration implements ConfigData {
 	@ConfigEntry.Gui.Tooltip(count = 2)
 	public boolean enableDamageInEnchantingTable = true;
 
+	@ConfigEntry.Gui.Tooltip(count = 2)
+	public boolean allowSilkTouchWithLooting = true;
+
 }
