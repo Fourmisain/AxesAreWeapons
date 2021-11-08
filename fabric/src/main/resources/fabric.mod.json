@@ -3,7 +3,7 @@
   "id": "axesareweapons",
   "version": "${version}",
   "name": "Axes Are Weapons",
-  "description": "Disables the increased durability loss in combat and enables Looting for axes\nDamage enchantments for axes will appear in the Enchanting Table too\nCheck the options for more",
+  "description": "Disables the increased durability loss in combat and enables Looting for axes\nDamage enchantments for axes will appear in the Enchanting Table too\nCheck the options for more!",
   "authors": [
     "Fourmisain"
   ],

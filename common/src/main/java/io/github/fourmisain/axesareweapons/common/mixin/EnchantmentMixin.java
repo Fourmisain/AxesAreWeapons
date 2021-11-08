@@ -18,19 +18,21 @@ import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CO
 public abstract class EnchantmentMixin {
 	@Inject(method = "isAcceptableItem", at = @At("RETURN"), cancellable = true)
 	public void enableAxeEnchantments(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (cir.getReturnValue() || !(stack.getItem() instanceof AxeItem)) return;
+		if (cir.getReturnValue()) return; // already accepted
 
-		Enchantment self = (Enchantment) (Object) this;
-		Identifier id = Registry.ENCHANTMENT.getId(self);
+		if (stack.getItem() instanceof AxeItem) {
+			Enchantment self = (Enchantment) (Object) this;
+			Identifier id = Registry.ENCHANTMENT.getId(self);
 
-		boolean isModded = id != null && !id.getNamespace().equals("minecraft");
-		boolean isSwordEnchant = self.isAcceptableItem(Items.NETHERITE_SWORD.getDefaultStack()); // approximate solution
+			boolean isModded = id != null && !id.getNamespace().equals("minecraft");
+			boolean isSwordEnchant = self.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
 
-		if (CONFIG.enableLooting && self == Enchantments.LOOTING
-			|| CONFIG.enableKnockback && self == Enchantments.KNOCKBACK
-			|| CONFIG.enableFireAspect && self == Enchantments.FIRE_ASPECT
-			|| (CONFIG.enableModded && isModded && isSwordEnchant)) {
-			cir.setReturnValue(true);
+			if (CONFIG.enableLooting && self == Enchantments.LOOTING
+					|| CONFIG.enableKnockback && self == Enchantments.KNOCKBACK
+					|| CONFIG.enableFireAspect && self == Enchantments.FIRE_ASPECT
+					|| (CONFIG.enableModded && isModded && isSwordEnchant)) {
+				cir.setReturnValue(true);
+			}
 		}
 	}
 }

@@ -13,7 +13,7 @@ authors="Fourmisain"
 description='''
 Disables the increased durability loss in combat and enables Looting for axes
 Damage enchantments for axes will appear in the Enchanting Table too
-Check the config for more options
+Check the config for more options!
 '''
 
 [[dependencies.axesareweapons]]

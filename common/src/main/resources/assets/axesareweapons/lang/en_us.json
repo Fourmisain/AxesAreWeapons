@@ -5,8 +5,11 @@
   "text.autoconfig.axesareweapons.option.enableFireAspect": "Enable Fire Aspect for Axes (via Anvil)",
   "text.autoconfig.axesareweapons.option.enableModded": "Enable modded Sword Enchantments for Axes (via Anvil)",
   "text.autoconfig.axesareweapons.option.enableForEnchantingTable": "Enable the above in the Enchanting Table too",
-  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting": "Make Silk Touch and Looting compatible",
+  "text.autoconfig.axesareweapons.option.enableForEnchantingTable.@Tooltip": "Otherwise books have to be used",
   "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable": "Enable Damage Enchantments for Axes in the Enchanting Table",
+  "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable.@Tooltip[0]": "Namely: Sharpness, Smite and Bane of the Bane of Arthropods",
+  "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable.@Tooltip[1]": "(These can always be added via books)",
+  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting": "Make Silk Touch and Looting compatible",
   "text.autoconfig.axesareweapons.option.enableLooting.@Tooltip[0]": "Once on an axe, the enchantment will stay",
   "text.autoconfig.axesareweapons.option.enableLooting.@Tooltip[1]": "on there, even if the option is disabled",
   "text.autoconfig.axesareweapons.option.enableKnockback.@Tooltip[0]": "Once on an axe, the enchantment will stay",
@@ -16,8 +19,5 @@
   "text.autoconfig.axesareweapons.option.enableModded.@Tooltip[0]": "Once on an axe, the enchantment will stay",
   "text.autoconfig.axesareweapons.option.enableModded.@Tooltip[1]": "on there, even if the option is disabled",
   "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[0]": "Once on an axe, the enchantments will stay",
-  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "on there, even if the option is disabled",
-  "text.autoconfig.axesareweapons.option.enableForEnchantingTable.@Tooltip": "Otherwise books have to be used",
-  "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable.@Tooltip[0]": "Namely: Sharpness, Smite and Bane of the Bane of Arthropods",
-  "text.autoconfig.axesareweapons.option.enableDamageInEnchantingTable.@Tooltip[1]": "(These can always be added via books)"
+  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "on there, even if the option is disabled"
 }
