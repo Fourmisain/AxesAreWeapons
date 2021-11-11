@@ -4,11 +4,11 @@ import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon;
 import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmlclient.ConfigGuiHandler.ConfigGuiFactory;
 
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
 
@@ -17,9 +17,8 @@ public class AxesAreWeapons {
 	public AxesAreWeapons() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 
-		ModLoadingContext.get().registerExtensionPoint(ConfigGuiFactory.class,
-				() -> new ConfigGuiFactory(
-						(client, parent) -> AutoConfig.getConfigScreen(AxesAreWeaponsConfig.class, parent).get()));
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
+				() -> (client, parent) -> AutoConfig.getConfigScreen(AxesAreWeaponsConfig.class, parent).get());
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {
