@@ -1,7 +1,6 @@
 package io.github.fourmisain.axesareweapons.common.mixin;
 
 import net.minecraft.enchantment.*;
-import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -16,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isToolWeapon;
 
 @Mixin(EnchantmentHelper.class)
 public abstract class EnchantmentHelperMixin {
@@ -23,7 +23,7 @@ public abstract class EnchantmentHelperMixin {
 	private static void addAxeEnchantments(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
 		List<EnchantmentLevelEntry> entries = cir.getReturnValue();
 
-		if (stack.getItem() instanceof AxeItem) {
+		if (isToolWeapon(stack.getItem())) {
 			if (CONFIG.enableDamageInEnchantingTable) {
 				for (Enchantment enchantment : Arrays.asList(Enchantments.SHARPNESS, Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS)) {
 					addEntry(entries, power, enchantment);
