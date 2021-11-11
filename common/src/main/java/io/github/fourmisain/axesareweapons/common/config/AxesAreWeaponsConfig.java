@@ -26,4 +26,7 @@ public class AxesAreWeaponsConfig implements ConfigData {
 	@ConfigEntry.Gui.Tooltip(count = 2)
 	public boolean allowSilkTouchWithLooting = true;
 
+	@ConfigEntry.Gui.Tooltip(count = 2)
+	public boolean allToolsAreWeapons = false;
+
 }

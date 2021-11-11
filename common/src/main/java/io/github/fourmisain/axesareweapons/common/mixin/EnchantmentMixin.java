@@ -2,7 +2,6 @@ package io.github.fourmisain.axesareweapons.common.mixin;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
@@ -13,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isToolWeapon;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
@@ -20,7 +20,7 @@ public abstract class EnchantmentMixin {
 	public void enableAxeEnchantments(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (cir.getReturnValue()) return; // already accepted
 
-		if (stack.getItem() instanceof AxeItem) {
+		if (isToolWeapon(stack.getItem())) {
 			Enchantment self = (Enchantment) (Object) this;
 			Identifier id = Registry.ENCHANTMENT.getId(self);
 

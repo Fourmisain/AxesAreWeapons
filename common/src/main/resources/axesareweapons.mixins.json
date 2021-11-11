@@ -4,7 +4,6 @@
 	"package": "io.github.fourmisain.axesareweapons.common.mixin",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
-		"AxeItemMixin",
 		"EnchantmentHelperMixin",
 		"EnchantmentMixin",
 		"LuckEnchantmentMixin",

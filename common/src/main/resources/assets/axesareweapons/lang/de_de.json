@@ -19,5 +19,7 @@
   "text.autoconfig.axesareweapons.option.enableModded.@Tooltip[0]": "Sobald die Verzauberung auf einer Axt ist, bleibt",
   "text.autoconfig.axesareweapons.option.enableModded.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
   "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[0]": "Sobald die Verzauberungen auf einer Axt sind, bleiben",
-  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird"
+  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
+  "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[0]": "Die langerwartete Fortsetzung dieser Mod",
+  "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[1]": "(Aktiviert alle Optionen auch für Spitzhacken, Schaufeln und Hacken)"
 }

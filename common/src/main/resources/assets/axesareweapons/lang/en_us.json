@@ -19,5 +19,8 @@
   "text.autoconfig.axesareweapons.option.enableModded.@Tooltip[0]": "Once on an axe, the enchantment will stay",
   "text.autoconfig.axesareweapons.option.enableModded.@Tooltip[1]": "on there, even if the option is disabled",
   "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[0]": "Once on an axe, the enchantments will stay",
-  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "on there, even if the option is disabled"
+  "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "on there, even if the option is disabled",
+  "text.autoconfig.axesareweapons.option.allToolsAreWeapons": "All Tools Are Weapons",
+  "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[0]": "The long-awaited sequel to this mod",
+  "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[1]": "(This will enable all the above options for Pickaxes, Shovels and Hoes too)"
 }
