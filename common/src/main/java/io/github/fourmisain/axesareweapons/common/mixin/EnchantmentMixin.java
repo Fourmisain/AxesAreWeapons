@@ -22,15 +22,20 @@ public abstract class EnchantmentMixin {
 
 		if (isToolWeapon(stack.getItem())) {
 			Enchantment self = (Enchantment) (Object) this;
+
+			if (CONFIG.enableLooting && self == Enchantments.LOOTING
+					|| CONFIG.enableKnockback && self == Enchantments.KNOCKBACK
+					|| CONFIG.enableFireAspect && self == Enchantments.FIRE_ASPECT) {
+				cir.setReturnValue(true);
+				return;
+			}
+
 			Identifier id = Registry.ENCHANTMENT.getId(self);
 
 			boolean isModded = id != null && !id.getNamespace().equals("minecraft");
 			boolean isSwordEnchant = self.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
 
-			if (CONFIG.enableLooting && self == Enchantments.LOOTING
-					|| CONFIG.enableKnockback && self == Enchantments.KNOCKBACK
-					|| CONFIG.enableFireAspect && self == Enchantments.FIRE_ASPECT
-					|| (CONFIG.enableModded && isModded && isSwordEnchant)) {
+			if (CONFIG.enableModded && isModded && isSwordEnchant) {
 				cir.setReturnValue(true);
 			}
 		}
