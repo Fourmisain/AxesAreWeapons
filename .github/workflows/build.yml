@@ -1,0 +1,31 @@
+name: build
+on: [ pull_request, push ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        java-distribution: [ 'temurin' ]
+        java: [ 17 ]
+        os: [ ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Setup ${{ matrix.java-distribution }} JDK ${{ matrix.java }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: ${{ matrix.java-distribution }}
+          java-version: ${{ matrix.java }}
+      - name: Build
+        run: ./gradlew build
+      - name: Upload build artifacts
+        if: ${{ runner.os == 'Linux' && matrix.java == '17' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: Artifacts
+          path: |
+            fabric/build/libs/
+            forge/build/libs/
