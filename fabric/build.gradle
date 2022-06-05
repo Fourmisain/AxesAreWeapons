@@ -1,11 +1,13 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.0"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
 architectury {
     platformSetupLoomIde()
     fabric()
 }
+
+version = rootProject.mod_version + "-fabric-" + rootProject.minecraft_version
 
 configurations {
     common
@@ -14,8 +16,6 @@ configurations {
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
 }
-
-version = rootProject.mod_version + "-fabric-" + rootProject.minecraft_version
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
@@ -39,6 +39,8 @@ processResources {
 }
 
 shadowJar {
+    exclude "architectury.common.json"
+
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
 }
@@ -46,7 +48,7 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-//    classifier "fabric" // adds suffix
+    classifier null
 }
 
 jar {
