@@ -1,5 +1,7 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.matthewprenger.cursegradle"
+    id "com.modrinth.minotaur"
 }
 
 architectury {
@@ -81,5 +83,56 @@ publishing {
     // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
         // Add repositories to publish to here.
+    }
+}
+
+modrinth {
+    var MODRINTH_TOKEN = System.getenv("MODRINTH_TOKEN")
+    if (MODRINTH_TOKEN != null) {
+        token = System.getenv("MODRINTH_TOKEN")
+        projectId = rootProject.modrinth_id
+        versionName = project.version
+        versionNumber = project.version
+        versionType = "release"
+        uploadFile = remapJar
+        changelog = changelog()
+        gameVersions = Arrays.stream(rootProject.forge_game_versions.split(',')).map(s -> s.trim()).toList()
+        loaders = ["forge"]
+        dependencies {
+            Arrays.stream(rootProject.modrinth_dependencies.split(',')).forEach(s -> required.project(s))
+        }
+    }
+}
+
+curseforge {
+    var CURSEFORGE_TOKEN = System.getenv("CURSEFORGE_TOKEN")
+    if (CURSEFORGE_TOKEN != null) {
+        apiKey = CURSEFORGE_TOKEN
+        project {
+            id = rootProject.curseforge_id
+            releaseType = "release"
+            changelogType = "markdown"
+            changelog = changelog()
+
+            addGameVersion "Forge"
+            Arrays.stream(rootProject.forge_game_versions.split(','))
+                .map(s -> s.trim())
+                .forEach(s -> addGameVersion(s))
+
+            relations {
+                Arrays.stream(rootProject.curseforge_dependencies.split(','))
+                    .forEach(s -> requiredDependency(s))
+            }
+            mainArtifact(remapJar.archivePath) {
+                displayName = project.version
+            }
+            afterEvaluate {
+                uploadTask.dependsOn("build")
+            }
+        }
+        options {
+            forgeGradleIntegration = false
+            javaVersionAutoDetect = false
+        }
     }
 }
