@@ -9,6 +9,8 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.FMLNetworkConstants;
+import org.apache.commons.lang3.tuple.Pair;
 
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
 
@@ -16,6 +18,10 @@ import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CO
 public class AxesAreWeapons {
 	public AxesAreWeapons() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+
+		// Make sure the mod being absent on the other network side does not cause the client to display the server as incompatible
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
+				() -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
 				() -> (client, parent) -> AutoConfig.getConfigScreen(AxesAreWeaponsConfig.class, parent).get());

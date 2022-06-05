@@ -27,7 +27,7 @@
     "axesareweapons.mixins.json"
   ],
   "depends": {
-    "fabricloader": "*",
+    "fabricloader": ">=0.12.12",
     "minecraft": "1.16.x",
     "cloth-config2": "*"
   }
