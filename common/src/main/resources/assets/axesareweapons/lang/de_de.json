@@ -1,5 +1,5 @@
 {
-  "modmenu.descriptionTranslation.axesareweapons": "Entfernt den erhöhten Haltbarkeitsverlust im Kampf und erlaubt Plünderung für Äxte",
+  "modmenu.descriptionTranslation.axesareweapons": "Entfernt den erhöhten Haltbarkeitsverlust im Kampf und erlaubt Plünderung für Äxte\nSchadensverzauberungen erscheinen auch für Äxte im Zaubertisch\nMehr in den Einstellungen!",
   "text.autoconfig.axesareweapons.option.enableLooting": "Erlaube Plünderung auf Äxten (via Amboss)",
   "text.autoconfig.axesareweapons.option.enableKnockback": "Erlaube Rückstoß auf Äxten (via Amboss)",
   "text.autoconfig.axesareweapons.option.enableFireAspect": "Erlaube Verbrennung auf Äxten (via Amboss)",
