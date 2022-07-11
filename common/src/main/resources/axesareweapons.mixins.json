@@ -4,10 +4,13 @@
 	"package": "io.github.fourmisain.axesareweapons.common.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
+		"AxeItemMixin",
 		"EnchantmentHelperMixin",
 		"EnchantmentMixin",
+		"ItemMixin",
 		"LuckEnchantmentMixin",
-		"MiningToolItemMixin"
+		"MiningToolItemMixin",
+		"PickaxeItemMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

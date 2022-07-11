@@ -4,6 +4,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
+@SuppressWarnings("CanBeFinal")
 @Config(name = "axesareweapons")
 public class AxesAreWeaponsConfig implements ConfigData {
 
@@ -25,6 +26,9 @@ public class AxesAreWeaponsConfig implements ConfigData {
 
 	@ConfigEntry.Gui.Tooltip(count = 2)
 	public boolean allowSilkTouchWithLooting = true;
+
+	@ConfigEntry.Gui.Tooltip(count = 2)
+	public boolean fastCobWebBreaking = false;
 
 	@ConfigEntry.Gui.Tooltip(count = 2)
 	public boolean allToolsAreWeapons = false;

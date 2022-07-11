@@ -22,5 +22,8 @@
   "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "on there, even if the option is disabled",
   "text.autoconfig.axesareweapons.option.allToolsAreWeapons": "All Tools Are Weapons",
   "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[0]": "The long-awaited sequel to this mod",
-  "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[1]": "(This will enable all the above options for Pickaxes, Shovels and Hoes too)"
+  "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[1]": "(This will enable all the above options for Pickaxes, Shovels and Hoes too)",
+  "text.autoconfig.axesareweapons.option.fastCobWebBreaking": "Fast Cobweb Breaking",
+  "text.autoconfig.axesareweapons.option.fastCobWebBreaking.@Tooltip[0]": "Break cobwebs as fast as a Sword",
+  "text.autoconfig.axesareweapons.option.fastCobWebBreaking.@Tooltip[1]": "Note this will also make them drop String"
 }
