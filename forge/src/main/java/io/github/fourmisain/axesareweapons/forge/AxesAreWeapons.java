@@ -4,7 +4,7 @@ import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon;
 import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import net.minecraftforge.client.ConfigGuiHandler;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -23,8 +23,8 @@ public class AxesAreWeapons {
 		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
 				() -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 
-		ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class,
-				() -> new ConfigGuiHandler.ConfigGuiFactory(
+		ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+				() -> new ConfigScreenHandler.ConfigScreenFactory(
 						(client, parent) -> AutoConfig.getConfigScreen(AxesAreWeaponsConfig.class, parent).get()));
 	}
 

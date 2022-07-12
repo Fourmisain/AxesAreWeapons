@@ -6,12 +6,17 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.MiningToolItem;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public class AxesAreWeaponsCommon {
 	public static final String MOD_ID = "axesareweapons";
 
 	public static AxesAreWeaponsConfig CONFIG;
+
+	public static Identifier id(String id) {
+		return new Identifier(MOD_ID, id);
+	}
 
 	public static boolean isToolWeapon(Item item) {
 		return item instanceof AxeItem || (CONFIG.allToolsAreWeapons && item instanceof MiningToolItem);
