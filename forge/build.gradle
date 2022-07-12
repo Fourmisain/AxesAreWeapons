@@ -14,6 +14,7 @@ version = rootProject.mod_version + "-forge-" + rootProject.minecraft_version
 loom {
     forge {
         mixinConfig "axesareweapons.mixins.json"
+        mixinConfig "axesareweapons.forge.mixins.json"
     }
 }
 
@@ -89,7 +90,7 @@ publishing {
 modrinth {
     var MODRINTH_TOKEN = System.getenv("MODRINTH_TOKEN")
     if (MODRINTH_TOKEN != null) {
-        token = System.getenv("MODRINTH_TOKEN")
+        token = MODRINTH_TOKEN
         projectId = rootProject.modrinth_id
         versionName = project.version
         versionNumber = project.version

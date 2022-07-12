@@ -86,7 +86,7 @@ publishing {
 modrinth {
     var MODRINTH_TOKEN = System.getenv("MODRINTH_TOKEN")
     if (MODRINTH_TOKEN != null) {
-        token = System.getenv("MODRINTH_TOKEN")
+        token = MODRINTH_TOKEN
         projectId = rootProject.modrinth_id
         versionName = project.version
         versionNumber = project.version

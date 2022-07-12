@@ -21,5 +21,8 @@
   "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[0]": "Sobald die Verzauberungen auf einer Axt sind, bleiben",
   "text.autoconfig.axesareweapons.option.allowSilkTouchWithLooting.@Tooltip[1]": "sie dort, selbst wenn die Option ausgeschalten wird",
   "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[0]": "Die langerwartete Fortsetzung dieser Mod",
-  "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[1]": "(Aktiviert alle Optionen auch für Spitzhacken, Schaufeln und Hacken)"
+  "text.autoconfig.axesareweapons.option.allToolsAreWeapons.@Tooltip[1]": "(Aktiviert alle Optionen auch für Spitzhacken, Schaufeln und Hacken)",
+  "text.autoconfig.axesareweapons.option.fastCobWebBreaking": "Schnelles Abbauen von Spinnennetzen",
+  "text.autoconfig.axesareweapons.option.fastCobWebBreaking.@Tooltip[0]": "Baut Spinnennetze so schnell wie mit einem Schwert ab",
+  "text.autoconfig.axesareweapons.option.fastCobWebBreaking.@Tooltip[1]": "Bemerke dass Spinnennetze damit auch Fäden droppen"
 }
