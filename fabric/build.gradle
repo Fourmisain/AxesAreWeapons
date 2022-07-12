@@ -88,7 +88,7 @@ modrinth {
     if (MODRINTH_TOKEN != null) {
         token = MODRINTH_TOKEN
         projectId = rootProject.modrinth_id
-        versionName = project.version
+        versionName = "${project.mod_version}-fabric [1.17-1.19]"
         versionNumber = project.version
         versionType = "release"
         uploadFile = remapJar
@@ -121,7 +121,7 @@ curseforge {
                     .forEach(s -> requiredDependency(s))
             }
             mainArtifact(remapJar.archivePath) {
-                displayName = project.version
+                displayName = "AxesAreWeapons-${project.mod_version}-fabric [1.17-1.19]"
             }
             afterEvaluate {
                 uploadTask.dependsOn("build")
