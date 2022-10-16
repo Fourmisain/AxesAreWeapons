@@ -24,7 +24,8 @@ public class AxesAreWeapons {
 		@SubscribeEvent
 		public void harvestCheck(PlayerEvent.HarvestCheck event) {
 			Item item = event.getEntity().getMainHandStack().getItem();
-			event.setCanHarvest(overrideCobWebSuitableness(item, event.getTargetBlock()));
+			if (overrideCobWebSuitableness(item, event.getTargetBlock()))
+				event.setCanHarvest(true);
 		}
 
 		@SubscribeEvent
