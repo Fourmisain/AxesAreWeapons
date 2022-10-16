@@ -29,10 +29,12 @@ public class AxesAreWeaponsCommon {
 		return 15f;
 	}
 
-	public static void overrideCobWebSuitableness(Item item, BlockState state, CallbackInfoReturnable<Boolean> cir) {
-		if (!CONFIG.fastCobWebBreaking || state.getBlock() != Blocks.COBWEB || !isToolWeapon(item))
-			return;
+	public static boolean overrideCobWebSuitableness(Item item, BlockState state) {
+		return CONFIG.fastCobWebBreaking && state.getBlock() == Blocks.COBWEB && isToolWeapon(item);
+	}
 
-		cir.setReturnValue(true);
+	public static void overrideCobWebSuitableness(Item item, BlockState state, CallbackInfoReturnable<Boolean> cir) {
+		if (overrideCobWebSuitableness(item, state))
+			cir.setReturnValue(true);
 	}
 }
