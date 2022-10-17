@@ -14,7 +14,6 @@ version = rootProject.mod_version + "-forge-" + rootProject.minecraft_version
 loom {
     forge {
         mixinConfig "axesareweapons.mixins.json"
-        mixinConfig "axesareweapons.forge.mixins.json"
     }
 }
 
