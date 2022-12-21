@@ -2,8 +2,8 @@ package io.github.fourmisain.axesareweapons.common.mixin;
 
 import net.minecraft.enchantment.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,9 +37,9 @@ public abstract class EnchantmentHelperMixin {
 
 				if (CONFIG.enableModded) {
 					// add all modded sword enchantments (for now)
-					for (Identifier id : Registry.ENCHANTMENT.getIds()) {
+					for (Identifier id : Registries.ENCHANTMENT.getIds()) {
 						if (!id.getNamespace().equals("minecraft")) {
-							Optional<Enchantment> enchantment = Registry.ENCHANTMENT.getOrEmpty(id);
+							Optional<Enchantment> enchantment = Registries.ENCHANTMENT.getOrEmpty(id);
 							if (enchantment.isPresent() && enchantment.get().type == EnchantmentTarget.WEAPON) {
 								addEntry(entries, power, enchantment.get());
 							}

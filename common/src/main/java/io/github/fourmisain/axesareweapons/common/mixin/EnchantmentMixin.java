@@ -4,8 +4,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,7 +30,7 @@ public abstract class EnchantmentMixin {
 				return;
 			}
 
-			Identifier id = Registry.ENCHANTMENT.getId(self);
+			Identifier id = Registries.ENCHANTMENT.getId(self);
 
 			boolean isModded = id != null && !id.getNamespace().equals("minecraft");
 			boolean isSwordEnchant = self.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
