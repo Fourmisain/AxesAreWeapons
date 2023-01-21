@@ -121,7 +121,7 @@ curseforge {
                     .forEach(s -> requiredDependency(s))
             }
             mainArtifact(remapJar.archivePath) {
-                displayName = "AxesAreWeapons-" + project.version
+                displayName = "AxesAreWeapons-${project.mod_version}-fabric-1.16.5"
             }
             afterEvaluate {
                 uploadTask.dependsOn("build")

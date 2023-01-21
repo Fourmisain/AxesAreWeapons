@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "io.github.fourmisain.axesareweapons.fabric.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"AxeItemMixin",
+		"ItemMixin",
+		"MiningToolItemMixin",
+		"PickaxeItemMixin",
+		"ShovelItemMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -1,4 +1,4 @@
-package io.github.fourmisain.axesareweapons.common.mixin;
+package io.github.fourmisain.axesareweapons.fabric.mixin;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
