@@ -6,7 +6,6 @@
 	"mixins": [
 		"EnchantmentHelperMixin",
 		"EnchantmentMixin",
-		"ItemMixin",
 		"LuckEnchantmentMixin",
 		"MiningToolItemMixin"
 	],
