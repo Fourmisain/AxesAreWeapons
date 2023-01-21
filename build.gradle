@@ -2,7 +2,7 @@ import java.nio.file.Files
 
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.0-SNAPSHOT" apply false
     id "com.matthewprenger.cursegradle" version "1.4.0" apply false
     id "com.modrinth.minotaur" version "2.+" apply false
 }
@@ -43,8 +43,35 @@ allprojects {
     }
 }
 
+static def parseGameVersions(versions) {
+    Arrays.stream(versions.split(',')).map(s -> s.trim()).toList()
+}
+
+static def titleSuffix(gameVersions) {
+    if (gameVersions.size() == 1)
+        return "-${gameVersions[0]}"
+
+    def v0 = gameVersions[0]
+    def v1 = gameVersions[gameVersions.size()-1]
+
+    def m0 = v0.split('[.]')[1]
+    def m1 = v1.split('[.]')[1]
+
+    if (m0 == m1) {
+        return "-${v1}"
+    }
+
+    return " [${v0} - ${v1}]"
+}
+
 ext {
     changelog = {
         return Files.readString(rootProject.file('changelog.txt').toPath())
     }
+
+    fabricGameVersions = { return parseGameVersions(rootProject.fabric_game_versions) }
+    forgeGameVersions = { return parseGameVersions(rootProject.forge_game_versions) }
+
+    fabricTitleSuffix = { return titleSuffix(fabricGameVersions()) }
+    forgeTitleSuffix = { return titleSuffix(forgeGameVersions()) }
 }
