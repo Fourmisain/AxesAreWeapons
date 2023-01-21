@@ -1,2 +1,1 @@
-a proper release for 1.19.3, as it was necessary afterall  
-fixes a crash related to enchanted items
+TODO
