@@ -14,7 +14,6 @@ version = rootProject.mod_version + "-forge-" + rootProject.minecraft_version
 loom {
     forge {
         mixinConfig "axesareweapons.mixins.json"
-        mixinConfig "axesareweapons.forge.mixins.json"
     }
 }
 
@@ -92,7 +91,7 @@ modrinth {
     if (MODRINTH_TOKEN != null) {
         token = MODRINTH_TOKEN
         projectId = rootProject.modrinth_id
-        versionName = project.version
+        versionName = "${project.mod_version}-forge-1.17.1"
         versionNumber = project.version
         versionType = "release"
         uploadFile = remapJar
@@ -125,7 +124,7 @@ curseforge {
                     .forEach(s -> requiredDependency(s))
             }
             mainArtifact(remapJar.archivePath) {
-                displayName = "AxesAreWeapons-" + project.version
+                displayName = "AxesAreWeapons-${project.mod_version}-forge-1.17.1"
             }
             afterEvaluate {
                 uploadTask.dependsOn("build")
