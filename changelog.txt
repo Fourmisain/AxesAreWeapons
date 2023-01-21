@@ -1,2 +1,1 @@
-Add an option for fast Cobweb mining (off by default)  
-Note this will also make it drop String
+TODO
