@@ -88,12 +88,12 @@ modrinth {
     if (MODRINTH_TOKEN != null) {
         token = MODRINTH_TOKEN
         projectId = rootProject.modrinth_id
-        versionName = project.version
+        versionName = "${project.mod_version}-fabric${fabricTitleSuffix()}"
         versionNumber = project.version
         versionType = "release"
         uploadFile = remapJar
         changelog = changelog()
-        gameVersions = Arrays.stream(rootProject.fabric_game_versions.split(',')).map(s -> s.trim()).toList()
+        gameVersions = fabricGameVersions()
         loaders = ["fabric"]
         dependencies {
             Arrays.stream(rootProject.modrinth_dependencies.split(',')).forEach(s -> required.project(s))
@@ -112,16 +112,14 @@ curseforge {
             changelog = changelog()
 
             addGameVersion "Fabric"
-            Arrays.stream(rootProject.fabric_game_versions.split(','))
-                .map(s -> s.trim())
-                .forEach(s -> addGameVersion(s))
+            fabricGameVersions().forEach(s -> addGameVersion(s))
 
             relations {
                 Arrays.stream(rootProject.curseforge_dependencies.split(','))
                     .forEach(s -> requiredDependency(s))
             }
             mainArtifact(remapJar.archivePath) {
-                displayName = "AxesAreWeapons-${project.mod_version}-fabric-1.16.5"
+                displayName = "AxesAreWeapons-${project.mod_version}-fabric${fabricTitleSuffix()}"
             }
             afterEvaluate {
                 uploadTask.dependsOn("build")

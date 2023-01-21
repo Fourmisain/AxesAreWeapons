@@ -91,12 +91,12 @@ modrinth {
     if (MODRINTH_TOKEN != null) {
         token = MODRINTH_TOKEN
         projectId = rootProject.modrinth_id
-        versionName = "${project.mod_version}-forge-1.16.5"
+        versionName = "${project.mod_version}-forge${forgeTitleSuffix()}"
         versionNumber = project.version
         versionType = "release"
         uploadFile = remapJar
         changelog = changelog()
-        gameVersions = Arrays.stream(rootProject.forge_game_versions.split(',')).map(s -> s.trim()).toList()
+        gameVersions = forgeGameVersions()
         loaders = ["forge"]
         dependencies {
             Arrays.stream(rootProject.modrinth_dependencies.split(',')).forEach(s -> required.project(s))
@@ -115,16 +115,14 @@ curseforge {
             changelog = changelog()
 
             addGameVersion "Forge"
-            Arrays.stream(rootProject.forge_game_versions.split(','))
-                .map(s -> s.trim())
-                .forEach(s -> addGameVersion(s))
+            forgeGameVersions().forEach(s -> addGameVersion(s))
 
             relations {
                 Arrays.stream(rootProject.curseforge_dependencies.split(','))
                     .forEach(s -> requiredDependency(s))
             }
             mainArtifact(remapJar.archivePath) {
-                displayName = "AxesAreWeapons-${project.mod_version}-forge-1.16.5"
+                displayName = "AxesAreWeapons-${project.mod_version}-forge${forgeTitleSuffix()}"
             }
             afterEvaluate {
                 uploadTask.dependsOn("build")
