@@ -24,7 +24,8 @@
     ]
   },
   "mixins": [
-    "axesareweapons.mixins.json"
+    "axesareweapons.mixins.json",
+    "axesareweapons-fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.8",
