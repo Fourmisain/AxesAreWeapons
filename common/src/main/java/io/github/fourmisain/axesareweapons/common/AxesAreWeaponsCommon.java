@@ -1,11 +1,13 @@
 package io.github.fourmisain.axesareweapons.common;
 
 import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.MiningToolItem;
+import net.minecraft.item.*;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -18,19 +20,28 @@ public class AxesAreWeaponsCommon {
 		return new Identifier(MOD_ID, id);
 	}
 
-	public static boolean isToolWeapon(Item item) {
-		return item instanceof AxeItem || (CONFIG.allToolsAreWeapons && item instanceof MiningToolItem);
+	public static void commonInit() {
+		CONFIG = AutoConfig.register(AxesAreWeaponsConfig.class, JanksonConfigSerializer::new).getConfig();
+	}
+
+	public static boolean isWeapon(Item item) {
+		return item instanceof AxeItem
+			|| (CONFIG.shovelsAreWeapons && item instanceof ShovelItem)
+			|| (CONFIG.hoesAreWeapons && item instanceof HoeItem)
+			|| (CONFIG.pickaxesAreWeapons && item instanceof PickaxeItem)
+			|| (CONFIG.rangedWeaponsAreWeapons && item instanceof RangedWeaponItem)
+			|| CONFIG.weaponIds.contains(Registry.ITEM.getId(item));
 	}
 
 	public static float overrideCobWebMiningSpeed(Item item, BlockState state, float miningSpeed) {
-		if (!CONFIG.fastCobWebBreaking || state.getBlock() != Blocks.COBWEB || !isToolWeapon(item))
+		if (!CONFIG.fastCobWebBreaking || state.getBlock() != Blocks.COBWEB || !isWeapon(item))
 			return miningSpeed;
 
 		return 15f;
 	}
 
 	public static boolean overrideCobWebSuitableness(Item item, BlockState state) {
-		return CONFIG.fastCobWebBreaking && state.getBlock() == Blocks.COBWEB && isToolWeapon(item);
+		return CONFIG.fastCobWebBreaking && state.getBlock() == Blocks.COBWEB && isWeapon(item);
 	}
 
 	public static void overrideCobWebSuitableness(Item item, BlockState state, CallbackInfoReturnable<Boolean> cir) {

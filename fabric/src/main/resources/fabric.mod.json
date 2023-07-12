@@ -19,6 +19,9 @@
     "main": [
       "io.github.fourmisain.axesareweapons.fabric.AxesAreWeapons"
     ],
+    "client": [
+      "io.github.fourmisain.axesareweapons.fabric.AxesAreWeapons"
+    ],
     "modmenu": [
       "io.github.fourmisain.axesareweapons.fabric.config.ModMenuImpl"
     ]
