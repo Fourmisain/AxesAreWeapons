@@ -2,6 +2,7 @@ package io.github.fourmisain.axesareweapons.common.mixin;
 
 import net.minecraft.enchantment.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isToolWeapon;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isWeapon;
 
 @Mixin(EnchantmentHelper.class)
 public abstract class EnchantmentHelperMixin {
@@ -23,7 +24,14 @@ public abstract class EnchantmentHelperMixin {
 	private static void addAxeEnchantments(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
 		List<EnchantmentLevelEntry> entries = cir.getReturnValue();
 
-		if (isToolWeapon(stack.getItem())) {
+		// Looting for (cross) bows
+		boolean addedLooting = false;
+		if (CONFIG.enableLootingForRangedWeapons && CONFIG.enableForEnchantingTable && stack.getItem() instanceof RangedWeaponItem) {
+			addEntry(entries, power, Enchantments.LOOTING);
+			addedLooting = true; // don't add it twice
+		}
+
+		if (isWeapon(stack.getItem())) {
 			if (CONFIG.enableDamageInEnchantingTable) {
 				for (Enchantment enchantment : Arrays.asList(Enchantments.SHARPNESS, Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS)) {
 					addEntry(entries, power, enchantment);
@@ -31,9 +39,9 @@ public abstract class EnchantmentHelperMixin {
 			}
 
 			if (CONFIG.enableForEnchantingTable) {
-				if (CONFIG.enableLooting)    addEntry(entries, power, Enchantments.LOOTING);
-				if (CONFIG.enableKnockback)  addEntry(entries, power, Enchantments.KNOCKBACK);
-				if (CONFIG.enableFireAspect) addEntry(entries, power, Enchantments.FIRE_ASPECT);
+				if (CONFIG.enableLooting && !addedLooting) addEntry(entries, power, Enchantments.LOOTING);
+				if (CONFIG.enableKnockback)                addEntry(entries, power, Enchantments.KNOCKBACK);
+				if (CONFIG.enableFireAspect)               addEntry(entries, power, Enchantments.FIRE_ASPECT);
 
 				if (CONFIG.enableModded) {
 					// add all modded sword enchantments (for now)

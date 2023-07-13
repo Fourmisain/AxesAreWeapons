@@ -1,15 +1,18 @@
 package io.github.fourmisain.axesareweapons.fabric;
 
-import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon;
+import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommonClient;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
-
-public class AxesAreWeapons implements ModInitializer {
+public class AxesAreWeapons implements ModInitializer, ClientModInitializer {
 	@Override
 	public void onInitialize() {
-		CONFIG = AutoConfig.register(AxesAreWeaponsConfig.class, JanksonConfigSerializer::new).getConfig();
+		AxesAreWeaponsCommon.commonInit();
+	}
+
+	@Override
+	public void onInitializeClient() {
+		AxesAreWeaponsCommonClient.clientInit();
 	}
 }

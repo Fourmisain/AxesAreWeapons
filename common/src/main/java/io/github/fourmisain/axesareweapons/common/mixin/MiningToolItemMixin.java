@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isToolWeapon;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isWeapon;
 
 @Mixin(value = MiningToolItem.class, priority = 990)
 public abstract class MiningToolItemMixin extends ToolItem implements Vanishable {
@@ -18,7 +18,7 @@ public abstract class MiningToolItemMixin extends ToolItem implements Vanishable
 
 	@ModifyConstant(method = "postHit", constant = @Constant(intValue = 2))
 	public int disableIncreasedAxeDurabilityLoss(int damageAmount) {
-		if (isToolWeapon(this)) return 1;
+		if (isWeapon(this)) return 1;
 		return damageAmount;
 	}
 }
