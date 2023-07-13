@@ -36,7 +36,9 @@ processResources {
     inputs.property "version", project.mod_version
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.mod_version
+        expand "version": project.mod_version, {
+            escapeBackslash = true
+        }
     }
 }
 
@@ -44,17 +46,17 @@ shadowJar {
     exclude "architectury.common.json"
 
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    archiveClassifier = null
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier = "dev"
 }
 
 sourcesJar {
