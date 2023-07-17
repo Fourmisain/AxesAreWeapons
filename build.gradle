@@ -1,5 +1,3 @@
-import java.nio.file.Files
-
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.2-SNAPSHOT" apply false
@@ -37,17 +35,74 @@ allprojects {
     tasks.withType(JavaCompile).configureEach {
         it.options.release = 16
     }
+}
 
-    java {
-        withSourcesJar()
+subprojects {
+    def loader = project.name
+    if (!enabled_platforms.split(',').contains(loader))
+        return
+
+    version = project.mod_version + "-" + loader +  "-" + project.minecraft_version
+
+    def toList = (String s) -> s.split(',').collect{ it.trim() }
+
+    def changelogMd = rootProject.file('changelog.md').getText("UTF-8")
+    def projectGameVersions = toList(property("${loader}_game_versions".toString()) as String)
+
+    apply plugin: "com.modrinth.minotaur"
+
+    modrinth {
+        def MODRINTH_TOKEN = System.getenv("MODRINTH_TOKEN")
+        if (MODRINTH_TOKEN != null) {
+            token = MODRINTH_TOKEN
+            projectId = project.modrinth_id
+            versionName = "${project.mod_version}-${loader}${titleSuffix(projectGameVersions)}"
+            versionNumber = project.mod_version
+            versionType = "release"
+            uploadFile = remapJar
+            changelog = changelogMd
+            gameVersions = projectGameVersions
+            loaders = [loader]
+            dependencies {
+                toList(project.modrinth_dependencies).each{ required.project(it) }
+            }
+        }
+    }
+
+    apply plugin: "com.matthewprenger.cursegradle"
+
+    curseforge {
+        def CURSEFORGE_TOKEN = System.getenv("CURSEFORGE_TOKEN")
+        if (CURSEFORGE_TOKEN != null) {
+            apiKey = CURSEFORGE_TOKEN
+            project {
+                id = project.curseforge_id
+                releaseType = "release"
+                changelogType = "markdown"
+                changelog = changelogMd
+
+                addGameVersion loader.capitalize()
+                projectGameVersions.each{ addGameVersion(it) }
+
+                relations {
+                    toList(project.curseforge_dependencies).each{ requiredDependency(it) }
+                }
+                mainArtifact(remapJar.archiveFile.get().asFile) {
+                    displayName = "AxesAreWeapons-${project.mod_version}-${loader}${titleSuffix(projectGameVersions)}"
+                }
+                afterEvaluate {
+                    uploadTask.dependsOn("build")
+                }
+            }
+            options {
+                forgeGradleIntegration = false
+                javaVersionAutoDetect = false
+            }
+        }
     }
 }
 
-static def parseGameVersions(versions) {
-    Arrays.stream(versions.split(',')).map(s -> s.trim()).toList()
-}
-
-static def titleSuffix(gameVersions) {
+static def titleSuffix(List<String> gameVersions) {
     if (gameVersions.size() == 1)
         return "-${gameVersions[0]}"
 
@@ -62,16 +117,4 @@ static def titleSuffix(gameVersions) {
     }
 
     return " [${v0} - ${v1}]"
-}
-
-ext {
-    changelog = {
-        return Files.readString(rootProject.file('changelog.txt').toPath())
-    }
-
-    fabricGameVersions = { return parseGameVersions(rootProject.fabric_game_versions) }
-    forgeGameVersions = { return parseGameVersions(rootProject.forge_game_versions) }
-
-    fabricTitleSuffix = { return titleSuffix(fabricGameVersions()) }
-    forgeTitleSuffix = { return titleSuffix(forgeGameVersions()) }
 }
