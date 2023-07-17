@@ -1,15 +1,11 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "com.matthewprenger.cursegradle"
-    id "com.modrinth.minotaur"
 }
 
 architectury {
     platformSetupLoomIde()
     fabric()
 }
-
-version = rootProject.mod_version + "-fabric-" + rootProject.minecraft_version
 
 configurations {
     common
@@ -59,77 +55,8 @@ jar {
     archiveClassifier = "dev"
 }
 
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
-    }
-}
-
-publishing {
-    publications {
-        mavenFabric(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
-}
-
-modrinth {
-    var MODRINTH_TOKEN = System.getenv("MODRINTH_TOKEN")
-    if (MODRINTH_TOKEN != null) {
-        token = MODRINTH_TOKEN
-        projectId = rootProject.modrinth_id
-        versionName = "${project.mod_version}-fabric${fabricTitleSuffix()}"
-        versionNumber = project.version
-        versionType = "release"
-        uploadFile = remapJar
-        changelog = changelog()
-        gameVersions = fabricGameVersions()
-        loaders = ["fabric"]
-        dependencies {
-            Arrays.stream(rootProject.modrinth_dependencies.split(',')).forEach(s -> required.project(s))
-        }
-    }
-}
-
-curseforge {
-    var CURSEFORGE_TOKEN = System.getenv("CURSEFORGE_TOKEN")
-    if (CURSEFORGE_TOKEN != null) {
-        apiKey = CURSEFORGE_TOKEN
-        project {
-            id = rootProject.curseforge_id
-            releaseType = "release"
-            changelogType = "markdown"
-            changelog = changelog()
-
-            addGameVersion "Fabric"
-            fabricGameVersions().forEach(s -> addGameVersion(s))
-
-            relations {
-                Arrays.stream(rootProject.curseforge_dependencies.split(','))
-                    .forEach(s -> requiredDependency(s))
-            }
-            mainArtifact(remapJar.archivePath) {
-                displayName = "AxesAreWeapons-${project.mod_version}-fabric${fabricTitleSuffix()}"
-            }
-            afterEvaluate {
-                uploadTask.dependsOn("build")
-            }
-        }
-        options {
-            forgeGradleIntegration = false
-            javaVersionAutoDetect = false
-        }
     }
 }
