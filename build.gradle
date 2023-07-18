@@ -56,8 +56,8 @@ subprojects {
         if (MODRINTH_TOKEN != null) {
             token = MODRINTH_TOKEN
             projectId = project.modrinth_id
-            versionName = "${project.mod_version}-${loader}${titleSuffix(projectGameVersions)}"
-            versionNumber = project.mod_version
+            versionName = project.mod_version
+            versionNumber = project.version
             versionType = "release"
             uploadFile = remapJar
             changelog = changelogMd
@@ -88,7 +88,7 @@ subprojects {
                     toList(project.curseforge_dependencies).each{ requiredDependency(it) }
                 }
                 mainArtifact(remapJar.archiveFile.get().asFile) {
-                    displayName = "AxesAreWeapons-${project.mod_version}-${loader}${titleSuffix(projectGameVersions)}"
+                    displayName = "${project.mod_version} [${loader.capitalize()} ${versionRange(projectGameVersions)}]"
                 }
                 afterEvaluate {
                     uploadTask.dependsOn("build")
@@ -102,19 +102,18 @@ subprojects {
     }
 }
 
-static def titleSuffix(List<String> gameVersions) {
+static String versionRange(List<String> gameVersions) {
     if (gameVersions.size() == 1)
-        return "-${gameVersions[0]}"
+        return gameVersions[0]
 
-    def v0 = gameVersions[0]
-    def v1 = gameVersions[gameVersions.size()-1]
+    def v0 = gameVersions.first()
+    def v1 = gameVersions.last()
 
     def m0 = v0.split('[.]')[1]
     def m1 = v1.split('[.]')[1]
 
-    if (m0 == m1) {
-        return "-${v1}"
-    }
+    if (m0 == m1)
+        return v1
 
-    return " [${v0} - ${v1}]"
+    return "${v0} - ${v1}"
 }
