@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "axesareweapons",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "Axes Are Weapons",
   "description": "Disables the increased durability loss in combat and enables Looting for axes\nDamage enchantments for axes will appear in the Enchanting Table too\nCheck the options for more!",
   "authors": [
@@ -27,12 +27,12 @@
     ]
   },
   "mixins": [
-    "axesareweapons.mixins.json",
-    "axesareweapons-fabric.mixins.json"
+    "axesareweapons.common.mixins.json",
+    "axesareweapons.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.8",
-    "minecraft": ">=1.19.3",
+    "minecraft": "${fabric_game_version_range}",
     "cloth-config2": "*"
   }
 }

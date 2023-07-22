@@ -2,7 +2,7 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "io.github.fourmisain.axesareweapons.common.mixin",
-	"compatibilityLevel": "JAVA_17",
+	"compatibilityLevel": "JAVA_${java_version}",
 	"mixins": [
 		"EnchantmentHelperMixin",
 		"EnchantmentMixin",
