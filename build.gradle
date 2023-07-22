@@ -23,9 +23,12 @@ allprojects {
     apply plugin: "java"
     apply plugin: "architectury-plugin"
 
-    archivesBaseName = rootProject.archives_base_name
     // version = rootProject.mod_version + rootProject.minecraft_version
     group = rootProject.maven_group
+
+    base {
+        archivesName = rootProject.archives_base_name
+    }
 
     repositories {
         maven { url = "https://maven.shedaniel.me/" }
@@ -33,11 +36,28 @@ allprojects {
     }
 
     tasks.withType(JavaCompile).configureEach {
-        it.options.release = 16
+        it.options.release = project.java_version as Integer
+    }
+
+    java {
+        targetCompatibility = sourceCompatibility = JavaVersion.toVersion(project.java_version as Integer)
     }
 }
 
 subprojects {
+    processResources {
+        def stringProperties = providers.gradlePropertiesPrefixedBy('').get()
+        stringProperties.each { inputs.property(it.key, it.value) }
+
+        ["axesareweapons.${project.name}.mixins.json", "fabric.mod.json", "META-INF/mods.toml"].each {
+            filesMatching(it) {
+                expand(stringProperties) {
+                    escapeBackslash = true
+                }
+            }
+        }
+    }
+
     def loader = project.name
     if (!enabled_platforms.split(',').contains(loader))
         return
@@ -47,7 +67,7 @@ subprojects {
     def toList = (String s) -> s.split(',').collect{ it.trim() }
 
     def changelogMd = rootProject.file('changelog.md').getText("UTF-8")
-    def projectGameVersions = toList(property("${loader}_game_versions".toString()) as String)
+    def projectGameVersions = toList(property("${loader}_game_version_list".toString()) as String)
 
     apply plugin: "com.modrinth.minotaur"
 
@@ -101,7 +121,8 @@ subprojects {
         }
     }
 
-    if (loader != 'fabric') return
+    if (loader != 'fabric')
+        return
 
     apply plugin: "minepkg-publish"
 
@@ -110,6 +131,7 @@ subprojects {
         if (MINEPKG_TOKEN != null) {
             apiKey = MINEPKG_TOKEN
             artifact = remapJar
+            platform = loader
             name = project.minepkg_id
             version = project.mod_version + "+" + project.minecraft_version
             license = "MIT"

@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/Fourmisain/AxesAreWeapons/issues"
 
 [[mods]]
 modId="axesareweapons"
-version="${version}"
+version="${mod_version}"
 displayName="Axes Are Weapons"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/axes-are-weapons"
 logoFile= "icon.png"
@@ -26,7 +26,7 @@ side="BOTH"
 [[dependencies.axesareweapons]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.17,)"
+versionRange="${forge_game_version_range}"
 ordering="NONE"
 side="BOTH"
 
