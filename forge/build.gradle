@@ -24,6 +24,9 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
 
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${project.mixinextras_version}"))
+    implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${project.mixinextras_version}"))
+
     modApi "me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
