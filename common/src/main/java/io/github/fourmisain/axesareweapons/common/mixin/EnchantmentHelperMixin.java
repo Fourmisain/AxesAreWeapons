@@ -25,10 +25,8 @@ public abstract class EnchantmentHelperMixin {
 		List<EnchantmentLevelEntry> entries = cir.getReturnValue();
 
 		// Looting for (cross) bows
-		boolean addedLooting = false;
 		if (CONFIG.enableLootingForRangedWeapons && CONFIG.enableForEnchantingTable && stack.getItem() instanceof RangedWeaponItem) {
 			addEntry(entries, power, Enchantments.LOOTING);
-			addedLooting = true; // don't add it twice
 		}
 
 		if (isWeapon(stack.getItem())) {
@@ -39,9 +37,9 @@ public abstract class EnchantmentHelperMixin {
 			}
 
 			if (CONFIG.enableForEnchantingTable) {
-				if (CONFIG.enableLooting && !addedLooting) addEntry(entries, power, Enchantments.LOOTING);
-				if (CONFIG.enableKnockback)                addEntry(entries, power, Enchantments.KNOCKBACK);
-				if (CONFIG.enableFireAspect)               addEntry(entries, power, Enchantments.FIRE_ASPECT);
+				if (CONFIG.enableLooting)    addEntry(entries, power, Enchantments.LOOTING);
+				if (CONFIG.enableKnockback)  addEntry(entries, power, Enchantments.KNOCKBACK);
+				if (CONFIG.enableFireAspect) addEntry(entries, power, Enchantments.FIRE_ASPECT);
 
 				if (CONFIG.enableModded) {
 					// add all modded sword enchantments (for now)
@@ -60,6 +58,10 @@ public abstract class EnchantmentHelperMixin {
 
 	@Unique
 	private static void addEntry(List<EnchantmentLevelEntry> entries, int power, Enchantment enchantment) {
+		// don't add if already in the pool
+		if (entries.stream().anyMatch(entry -> entry.enchantment == enchantment))
+			return;
+
 		// add appropriate enchantment level for the given power
 		for (int level = enchantment.getMaxLevel(); level >= enchantment.getMinLevel(); level--) {
 			if (enchantment.getMinPower(level) <= power && power <= enchantment.getMaxPower(level)) {
