@@ -5,10 +5,14 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 public class AxesAreWeaponsCommon {
 	public static final String MOD_ID = "axesareweapons";
@@ -46,5 +50,19 @@ public class AxesAreWeaponsCommon {
 	public static void overrideCobWebSuitableness(Item item, BlockState state, CallbackInfoReturnable<Boolean> cir) {
 		if (overrideCobWebSuitableness(item, state))
 			cir.setReturnValue(true);
+	}
+
+	public static void addEnchantmentEntry(List<EnchantmentLevelEntry> entries, int power, Enchantment enchantment) {
+		// don't add if already in the pool
+		if (entries.stream().anyMatch(entry -> entry.enchantment == enchantment))
+			return;
+
+		// add appropriate enchantment level for the given power
+		for (int level = enchantment.getMaxLevel(); level >= enchantment.getMinLevel(); level--) {
+			if (enchantment.getMinPower(level) <= power && power <= enchantment.getMaxPower(level)) {
+				entries.add(new EnchantmentLevelEntry(enchantment, level));
+				break;
+			}
+		}
 	}
 }
