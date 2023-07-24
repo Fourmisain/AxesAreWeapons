@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[38,)"
+loaderVersion="[40,)"
 license="MIT"
 issueTrackerURL="https://github.com/Fourmisain/AxesAreWeapons/issues"
 
@@ -19,7 +19,7 @@ Check the config for more options!
 [[dependencies.axesareweapons]]
 modId="forge"
 mandatory=true
-versionRange="[38.0.6,)"
+versionRange="[40.2.3,)"
 ordering="NONE"
 side="BOTH"
 
@@ -33,6 +33,6 @@ side="BOTH"
 [[dependencies.axesareweapons]]
 modId="cloth_config"
 mandatory=true
-versionRange="[6.0.0,)"
+versionRange="[6.2.57,)"
 ordering="NONE"
 side="BOTH"
