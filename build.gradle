@@ -22,6 +22,7 @@ subprojects {
 allprojects {
     apply plugin: "java"
     apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
 
     // version = rootProject.mod_version + rootProject.minecraft_version
     group = rootProject.maven_group
@@ -42,6 +43,7 @@ allprojects {
 
     java {
         targetCompatibility = sourceCompatibility = JavaVersion.toVersion(project.java_version as Integer)
+        withSourcesJar()
     }
 }
 
