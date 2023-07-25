@@ -14,4 +14,4 @@ pluginManagement {
 include("common")
 include(enabled_platforms.split(","))
 
-rootProject.name = "AxesAreWeapons"
+rootProject.name = archives_base_name

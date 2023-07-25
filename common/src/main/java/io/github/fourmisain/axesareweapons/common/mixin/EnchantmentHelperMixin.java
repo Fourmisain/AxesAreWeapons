@@ -6,7 +6,6 @@ import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -15,8 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isWeapon;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.*;
 
 @Mixin(EnchantmentHelper.class)
 public abstract class EnchantmentHelperMixin {
@@ -25,23 +23,21 @@ public abstract class EnchantmentHelperMixin {
 		List<EnchantmentLevelEntry> entries = cir.getReturnValue();
 
 		// Looting for (cross) bows
-		boolean addedLooting = false;
 		if (CONFIG.enableLootingForRangedWeapons && CONFIG.enableForEnchantingTable && stack.getItem() instanceof RangedWeaponItem) {
-			addEntry(entries, power, Enchantments.LOOTING);
-			addedLooting = true; // don't add it twice
+			addEnchantmentEntry(entries, power, Enchantments.LOOTING);
 		}
 
 		if (isWeapon(stack.getItem())) {
 			if (CONFIG.enableDamageInEnchantingTable) {
 				for (Enchantment enchantment : Arrays.asList(Enchantments.SHARPNESS, Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS)) {
-					addEntry(entries, power, enchantment);
+					addEnchantmentEntry(entries, power, enchantment);
 				}
 			}
 
 			if (CONFIG.enableForEnchantingTable) {
-				if (CONFIG.enableLooting && !addedLooting) addEntry(entries, power, Enchantments.LOOTING);
-				if (CONFIG.enableKnockback)                addEntry(entries, power, Enchantments.KNOCKBACK);
-				if (CONFIG.enableFireAspect)               addEntry(entries, power, Enchantments.FIRE_ASPECT);
+				if (CONFIG.enableLooting)    addEnchantmentEntry(entries, power, Enchantments.LOOTING);
+				if (CONFIG.enableKnockback)  addEnchantmentEntry(entries, power, Enchantments.KNOCKBACK);
+				if (CONFIG.enableFireAspect) addEnchantmentEntry(entries, power, Enchantments.FIRE_ASPECT);
 
 				if (CONFIG.enableModded) {
 					// add all modded sword enchantments (for now)
@@ -49,22 +45,11 @@ public abstract class EnchantmentHelperMixin {
 						if (!id.getNamespace().equals("minecraft")) {
 							Optional<Enchantment> enchantment = Registry.ENCHANTMENT.getOrEmpty(id);
 							if (enchantment.isPresent() && enchantment.get().type == EnchantmentTarget.WEAPON) {
-								addEntry(entries, power, enchantment.get());
+								addEnchantmentEntry(entries, power, enchantment.get());
 							}
 						}
 					}
 				}
-			}
-		}
-	}
-
-	@Unique
-	private static void addEntry(List<EnchantmentLevelEntry> entries, int power, Enchantment enchantment) {
-		// add appropriate enchantment level for the given power
-		for (int level = enchantment.getMaxLevel(); level >= enchantment.getMinLevel(); level--) {
-			if (enchantment.getMinPower(level) <= power && power <= enchantment.getMaxPower(level)) {
-				entries.add(new EnchantmentLevelEntry(enchantment, level));
-				break;
 			}
 		}
 	}
