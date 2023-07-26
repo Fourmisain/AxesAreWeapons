@@ -1,4 +1,4 @@
-package io.github.fourmisain.axesareweapons.common.mixin;
+package io.github.fourmisain.axesareweapons.forge.mixin;
 
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolItem;

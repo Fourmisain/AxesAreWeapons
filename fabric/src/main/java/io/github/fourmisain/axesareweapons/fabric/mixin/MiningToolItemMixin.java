@@ -1,5 +1,6 @@
 package io.github.fourmisain.axesareweapons.fabric.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,10 +11,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.overrideCobWebMiningSpeed;
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.overrideCobWebSuitableness;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.*;
 
-@Mixin(value = MiningToolItem.class)
+@Mixin(value = MiningToolItem.class, priority = 990)
 public abstract class MiningToolItemMixin extends ToolItem implements Vanishable {
 	// Note: needs to be a ThreadLocal since some mods call these methods in parallel!
 	@Unique
@@ -23,12 +23,18 @@ public abstract class MiningToolItemMixin extends ToolItem implements Vanishable
 		super(material, settings);
 	}
 
+	@ModifyExpressionValue(method = "postHit", at = @At(value = "CONSTANT", args = "intValue=2"))
+	public int disableIncreasedAxeDurabilityLoss(int damageAmount) {
+		if (isWeapon(this)) return 1;
+		return damageAmount;
+	}
+
 	@Inject(method = "getMiningSpeedMultiplier", at = @At("HEAD"))
 	public void cobWebsAreSpeed(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> cir) {
 		axesareweapons$state.set(state);
 	}
 
-	@ModifyConstant(method = "getMiningSpeedMultiplier", constant = @Constant(floatValue = 1.0f))
+	@ModifyExpressionValue(method = "getMiningSpeedMultiplier", at = @At(value = "CONSTANT", args = "floatValue=1.0f"))
 	public float cobWebsAreSpeed(float miningSpeed) {
 		float newMiningSpeed = overrideCobWebMiningSpeed(this, axesareweapons$state.get(), miningSpeed);
 		axesareweapons$state.set(null);
