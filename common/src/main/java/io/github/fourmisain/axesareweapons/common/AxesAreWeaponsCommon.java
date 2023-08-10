@@ -3,6 +3,7 @@ package io.github.fourmisain.axesareweapons.common;
 import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Jankson;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
@@ -24,7 +25,10 @@ public class AxesAreWeaponsCommon {
 	}
 
 	public static void commonInit() {
-		CONFIG = AutoConfig.register(AxesAreWeaponsConfig.class, JanksonConfigSerializer::new).getConfig();
+		Jankson jankson = new Jankson.Builder()
+			.registerSerializer(Identifier.class, ((identifier, marshaller) -> marshaller.serialize(identifier.toString())))
+			.registerDeserializer(String.class, Identifier.class, (object, marshaller) -> new Identifier(object)).build();
+		CONFIG = AutoConfig.register(AxesAreWeaponsConfig.class, (config, configClass) -> new JanksonConfigSerializer<>(config, configClass, jankson)).getConfig();
 	}
 
 	public static boolean isWeapon(Item item) {
