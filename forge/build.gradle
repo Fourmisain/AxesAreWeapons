@@ -24,8 +24,7 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
 
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${project.mixinextras_version}"))
-    implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${project.mixinextras_version}"))
+    shadow(annotationProcessor("io.github.llamalad7.mixinextras:mixinextras-common:${project.mixinextras_version}"))
 
     modApi "me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}"
 
@@ -37,8 +36,11 @@ shadowJar {
     exclude "fabric.mod.json"
     exclude "architectury.common.json"
 
-    configurations = [project.configurations.shadowCommon]
+    configurations = [project.configurations.shadow, project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
+
+    relocate("com.llamalad7.mixinextras", "io.github.fourmisain.axesareweapons.mixinextras")
+    mergeServiceFiles()
 }
 
 remapJar {

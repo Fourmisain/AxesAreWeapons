@@ -44,7 +44,7 @@ public abstract class EnchantmentHelperMixin {
 					for (Identifier id : Registries.ENCHANTMENT.getIds()) {
 						if (!id.getNamespace().equals("minecraft")) {
 							Optional<Enchantment> enchantment = Registries.ENCHANTMENT.getOrEmpty(id);
-							if (enchantment.isPresent() && enchantment.get().type == EnchantmentTarget.WEAPON) {
+							if (enchantment.isPresent() && enchantment.get().target == EnchantmentTarget.WEAPON) {
 								addEnchantmentEntry(entries, power, enchantment.get());
 							}
 						}
