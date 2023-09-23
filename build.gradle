@@ -35,6 +35,7 @@ allprojects {
         maven { url = "https://maven.shedaniel.me/" }
         maven { url = "https://maven.terraformersmc.com/" }
         maven { url = "https://jitpack.io" }
+        mavenCentral()
     }
 
     tasks.withType(JavaCompile).configureEach {
