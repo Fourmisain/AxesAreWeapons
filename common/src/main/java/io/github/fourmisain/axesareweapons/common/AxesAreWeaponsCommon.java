@@ -18,17 +18,20 @@ import java.util.List;
 public class AxesAreWeaponsCommon {
 	public static final String MOD_ID = "axesareweapons";
 
-	public static AxesAreWeaponsConfig CONFIG;
+	public final static AxesAreWeaponsConfig CONFIG;
+	static {
+		Jankson jankson = new Jankson.Builder()
+			.registerSerializer(Identifier.class, ((identifier, marshaller) -> marshaller.serialize(identifier.toString())))
+			.registerDeserializer(String.class, Identifier.class, (object, marshaller) -> new Identifier(object)).build();
+		CONFIG = AutoConfig.register(AxesAreWeaponsConfig.class, (config, configClass) -> new JanksonConfigSerializer<>(config, configClass, jankson)).getConfig();
+	}
 
 	public static Identifier id(String id) {
 		return new Identifier(MOD_ID, id);
 	}
 
 	public static void commonInit() {
-		Jankson jankson = new Jankson.Builder()
-			.registerSerializer(Identifier.class, ((identifier, marshaller) -> marshaller.serialize(identifier.toString())))
-			.registerDeserializer(String.class, Identifier.class, (object, marshaller) -> new Identifier(object)).build();
-		CONFIG = AutoConfig.register(AxesAreWeaponsConfig.class, (config, configClass) -> new JanksonConfigSerializer<>(config, configClass, jankson)).getConfig();
+
 	}
 
 	public static boolean isWeapon(Item item) {
