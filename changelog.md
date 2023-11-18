@@ -1,3 +1,1 @@
- - fix potential crash due to config being uninitialized in early mixin calls (e.g. with Enchanting Tweaks)
- - make forge version compatible with 1.19.3 to 1.20.2
- - fix potential memory leak in multi-threading scenarios
+ - support NeoForge

@@ -1,6 +1,6 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.3-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.4-SNAPSHOT" apply false
     id "com.matthewprenger.cursegradle" version "1.4.0" apply false
     id "com.modrinth.minotaur" version "2.+" apply false
     id "minepkg-publish" version "latest.release" apply false
@@ -72,6 +72,7 @@ subprojects {
 
     def changelogMd = rootProject.file('changelog.md').getText("UTF-8")
     def projectGameVersions = toList(property("${loader}_game_version_list".toString()) as String)
+    def capitalizedLoader = loader == 'neoforge' ? 'NeoForge' : loader.capitalize()
 
     apply plugin: "com.modrinth.minotaur"
 
@@ -105,14 +106,14 @@ subprojects {
                 changelogType = "markdown"
                 changelog = changelogMd
 
-                addGameVersion loader.capitalize()
+                addGameVersion capitalizedLoader
                 projectGameVersions.each{ addGameVersion(it) }
 
                 relations {
                     toList(project.curseforge_dependencies).each{ requiredDependency(it) }
                 }
                 mainArtifact(remapJar.archiveFile.get().asFile) {
-                    displayName = "${project.mod_version} [${loader.capitalize()} ${versionRange(projectGameVersions)}]"
+                    displayName = "${project.mod_version} [${capitalizedLoader} ${versionRange(projectGameVersions)}]"
                 }
                 afterEvaluate {
                     uploadTask.dependsOn("build")
