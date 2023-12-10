@@ -30,7 +30,7 @@ public abstract class MiningToolItemMixin extends ToolItem implements Vanishable
 	@ModifyExpressionValue(method = "getMiningSpeedMultiplier", at = @At(value = "CONSTANT", args = "floatValue=1.0f"))
 	public float cobWebsAreSpeed(float miningSpeed) {
 		float newMiningSpeed = overrideCobWebMiningSpeed(this, axesareweapons$state.get(), miningSpeed);
-		axesareweapons$state.set(null);
+		axesareweapons$state.remove();
 		return newMiningSpeed;
 	}
 
