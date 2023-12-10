@@ -23,7 +23,7 @@ dependencies {
     neoForge "net.neoforged:neoforge:${project.neoforge_version}"
 
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${project.mixinextras_version}"))
-    implementation(include("io.github.llamalad7:mixinextras-neoforge:${project.mixinextras_version}"))
+    implementation("io.github.llamalad7:mixinextras-neoforge:${project.mixinextras_version}")
     modApi "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }

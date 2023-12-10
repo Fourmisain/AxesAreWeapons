@@ -9,7 +9,6 @@
 		"LuckEnchantmentMixin",
 		"MiningToolItemMixin"
 	],
-	"plugin": "io.github.fourmisain.axesareweapons.common.MixinPlugin",
 	"injectors": {
 		"defaultRequire": 1
 	}
