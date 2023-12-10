@@ -12,7 +12,7 @@ import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.ov
 @Mixin(value = Item.class, priority = 990)
 public abstract class ItemMixin {
 	@Inject(method = "isSuitableFor", at = @At("HEAD"), cancellable = true)
-	public void f(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+	public void cobWebsAreSuitable(BlockState state, CallbackInfoReturnable<Boolean> cir) {
 		overrideCobWebSuitableness((Item) (Object) this, state, cir);
 	}
 }
