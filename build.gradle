@@ -70,7 +70,7 @@ subprojects {
 
     def toList = (String s) -> s.split(',').collect{ it.trim() }
 
-    def changelogMd = rootProject.file('changelog.md').getText("UTF-8")
+    def changesMd = rootProject.file('changes.md').exists() ? rootProject.file('changes.md').getText("UTF-8") : ''
     def projectGameVersions = toList(property("${loader}_game_version_list".toString()) as String)
     def capitalizedLoader = loader == 'neoforge' ? 'NeoForge' : loader.capitalize()
 
@@ -85,7 +85,7 @@ subprojects {
             versionNumber = project.version
             versionType = "release"
             uploadFile = remapJar
-            changelog = changelogMd
+            changelog = changesMd
             gameVersions = projectGameVersions
             loaders = [loader]
             dependencies {
@@ -104,7 +104,7 @@ subprojects {
                 id = project.curseforge_id
                 releaseType = "release"
                 changelogType = "markdown"
-                changelog = changelogMd
+                changelog = changesMd
 
                 addGameVersion capitalizedLoader
                 projectGameVersions.each{ addGameVersion(it) }
