@@ -9,7 +9,7 @@ architectury {
 
 loom {
     forge {
-        mixinConfig "axesareweapons.common.mixins.json"
+        mixinConfig "axesareweapons.common.mixins.json", "axesareweapons.forge.mixins.json"
     }
 }
 
