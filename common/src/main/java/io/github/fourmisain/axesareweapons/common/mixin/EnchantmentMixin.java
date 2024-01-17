@@ -1,10 +1,8 @@
 package io.github.fourmisain.axesareweapons.common.mixin;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,31 +16,17 @@ import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.is
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
 	@Inject(method = "isAcceptableItem", at = @At("RETURN"), cancellable = true)
-	public void enableAxeEnchantments(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+	public void axesareweapons$addModdedSwordEnchantments(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (cir.getReturnValue()) return; // already accepted
 
-		Enchantment self = (Enchantment) (Object) this;
-
-		// Looting for (cross) bows
-		if (CONFIG.enableLootingForRangedWeapons && self == Enchantments.LOOTING && stack.getItem() instanceof RangedWeaponItem) {
-			cir.setReturnValue(true);
-			return;
-		}
-
-		if (isWeapon(stack.getItem())) {
-			if (CONFIG.enableLooting && self == Enchantments.LOOTING
-					|| CONFIG.enableKnockback && self == Enchantments.KNOCKBACK
-					|| CONFIG.enableFireAspect && self == Enchantments.FIRE_ASPECT) {
-				cir.setReturnValue(true);
-				return;
-			}
-
+		if (CONFIG.enableModded && isWeapon(stack.getItem(), true)) {
+			Enchantment self = (Enchantment) (Object) this;
 			Identifier id = Registries.ENCHANTMENT.getId(self);
 
 			boolean isModded = id != null && !id.getNamespace().equals("minecraft");
 			boolean isSwordEnchant = self.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
 
-			if (CONFIG.enableModded && isModded && isSwordEnchant) {
+			if (isModded && isSwordEnchant) {
 				cir.setReturnValue(true);
 			}
 		}

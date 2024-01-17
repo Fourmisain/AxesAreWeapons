@@ -31,8 +31,8 @@
     "axesareweapons.fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.15.0",
+    "fabricloader": ">=0.15.10",
     "minecraft": "${fabric_game_version_range}",
-    "cloth-config2": "*"
+    "cloth-config": "*"
   }
 }

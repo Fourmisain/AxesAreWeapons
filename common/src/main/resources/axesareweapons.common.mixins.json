@@ -6,8 +6,11 @@
 	"mixins": [
 		"EnchantmentHelperMixin",
 		"EnchantmentMixin",
+		"EnchantmentsMixin",
+		"ItemGroupsMixin",
 		"LuckEnchantmentMixin",
-		"MiningToolItemMixin"
+		"MiningToolItemMixin",
+		"TagGroupLoaderMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

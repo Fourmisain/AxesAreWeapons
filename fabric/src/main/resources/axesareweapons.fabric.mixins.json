@@ -4,7 +4,7 @@
 	"package": "io.github.fourmisain.axesareweapons.fabric.mixin",
 	"compatibilityLevel": "JAVA_${java_version}",
 	"mixins": [
-		"MiningToolItemMixin"
+		"ItemMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

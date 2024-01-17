@@ -5,56 +5,50 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.minecraft.util.Identifier;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @SuppressWarnings("CanBeFinal")
 @Config(name = "axesareweapons")
 public class AxesAreWeaponsConfig implements ConfigData {
 
 	@ConfigEntry.Gui.Tooltip
-	public boolean enableLooting = true;
+	public volatile boolean enableLooting = true;
 	@ConfigEntry.Gui.Tooltip
-	public boolean enableKnockback = false;
+	public volatile boolean enableKnockback = false;
 	@ConfigEntry.Gui.Tooltip
-	public boolean enableFireAspect = false;
+	public volatile boolean enableFireAspect = false;
 
 	@ConfigEntry.Gui.Tooltip
-	public boolean enableModded = false;
+	public volatile boolean enableModded = false;
 
 	@ConfigEntry.Gui.Tooltip
-	public boolean enableForEnchantingTable = true;
+	public volatile boolean allowSilkTouchWithLooting = true;
 
 	@ConfigEntry.Gui.Tooltip
-	public boolean enableDamageInEnchantingTable = true;
-
-	@ConfigEntry.Gui.Tooltip
-	public boolean allowSilkTouchWithLooting = true;
-
-	@ConfigEntry.Gui.Tooltip
-	public boolean fastCobWebBreaking = false;
+	public volatile boolean fastCobWebBreaking = false;
 
 	@ConfigEntry.Category("alltoolsareweapons")
 	@ConfigEntry.Gui.Tooltip
-	public boolean pickaxesAreWeapons = false;
+	public volatile boolean pickaxesAreWeapons = false;
 
 	@ConfigEntry.Category("alltoolsareweapons")
 	@ConfigEntry.Gui.Tooltip
-	public boolean shovelsAreWeapons = false;
+	public volatile boolean shovelsAreWeapons = false;
 
 	@ConfigEntry.Category("alltoolsareweapons")
 	@ConfigEntry.Gui.Tooltip
-	public boolean hoesAreWeapons = false;
+	public volatile boolean hoesAreWeapons = false;
 
 	@ConfigEntry.Category("alltoolsareweapons")
 	@ConfigEntry.Gui.Tooltip
-	public boolean rangedWeaponsAreWeapons = false;
+	public volatile boolean rangedWeaponsAreWeapons = false;
 
 	@ConfigEntry.Category("alltoolsareweapons")
 	@ConfigEntry.Gui.Tooltip
-	public boolean enableLootingForRangedWeapons = false;
+	public volatile boolean enableLootingForRangedWeapons = false;
 
 	@ConfigEntry.Category("alltoolsareweapons")
 	@ConfigEntry.Gui.Tooltip
-	public Set<Identifier> weaponIds = new HashSet<>();
+	public Set<Identifier> weaponIds = ConcurrentHashMap.newKeySet();
 }
