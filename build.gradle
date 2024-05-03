@@ -15,8 +15,10 @@ subprojects {
 
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        if (project.name != 'neoforge')
+        mappings loom.layered {
             mappings "net.fabricmc:yarn:${rootProject.yarn_mappings}:v2"
+            mappings "dev.architectury:yarn-mappings-patch-neoforge:1.21+build.4"
+        }
     }
 }
 
@@ -54,7 +56,7 @@ subprojects {
         def stringProperties = providers.gradlePropertiesPrefixedBy('').get()
         stringProperties.each { inputs.property(it.key, it.value) }
 
-        ["axesareweapons.${project.name}.mixins.json", "fabric.mod.json", "META-INF/mods.toml", "META-INF/neoforge.mods.toml"].each {
+        ["*.mixins.json", "*.mod.json*", "META-INF/*mods.toml"].each {
             filesMatching(it) {
                 expand(stringProperties) {
                     escapeBackslash = true

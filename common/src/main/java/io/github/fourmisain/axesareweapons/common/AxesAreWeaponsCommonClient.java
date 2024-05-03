@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class AxesAreWeaponsCommonClient {
 	public static void clientInit() {
-		StringSetGuiProvider<Identifier> guiProvider = new StringSetGuiProvider<>(Identifier.class, Identifier::new);
+		StringSetGuiProvider<Identifier> guiProvider = new StringSetGuiProvider<>(Identifier.class, Identifier::of);
 		AutoConfig.getGuiRegistry(AxesAreWeaponsConfig.class).registerPredicateProvider(guiProvider, guiProvider.getPredicate());
 
 		AutoConfig.getGuiRegistry(AxesAreWeaponsConfig.class).registerTypeProvider(

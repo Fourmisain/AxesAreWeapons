@@ -23,7 +23,10 @@ public class AxesAreWeaponsConfig implements ConfigData {
 	public volatile boolean enableModded = false;
 
 	@ConfigEntry.Gui.Tooltip
-	public volatile boolean allowSilkTouchWithLooting = true;
+	public volatile boolean enableForEnchantingTable = true;
+
+	@ConfigEntry.Gui.Tooltip
+	public volatile boolean enableDamageInEnchantingTable = true;
 
 	@ConfigEntry.Gui.Tooltip
 	public volatile boolean fastCobWebBreaking = false;

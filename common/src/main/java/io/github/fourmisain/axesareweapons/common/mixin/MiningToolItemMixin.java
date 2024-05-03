@@ -15,7 +15,7 @@ public abstract class MiningToolItemMixin extends ToolItem {
 		super(toolMaterial, settings);
 	}
 
-	@ModifyExpressionValue(method = "postHit", at = @At(value = "CONSTANT", args = "intValue=2"))
+	@ModifyExpressionValue(method = "postDamageEntity", at = @At(value = "CONSTANT", args = "intValue=2"))
 	public int axesareweapons$disableIncreasedAxeDurabilityLoss(int damageAmount) {
 		if (isWeapon(this, true)) return 1;
 		return damageAmount;

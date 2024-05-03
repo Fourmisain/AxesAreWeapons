@@ -32,7 +32,7 @@ public abstract class TagGroupLoaderMixin {
 	public void axesareweapons$addWeaponTags(ResourceManager resourceManager, CallbackInfoReturnable<Map<Identifier, List<TrackedEntry>>> cir) {
 		var map = cir.getReturnValue();
 
-		if (!dataType.equals("tags/items"))
+		if (!dataType.equals("tags/item"))
 			return;
 
 		if (CONFIG.enableLootingForRangedWeapons) {
@@ -58,6 +58,12 @@ public abstract class TagGroupLoaderMixin {
 
 		if (CONFIG.enableFireAspect)
 			tags.add(ItemTags.FIRE_ASPECT_ENCHANTABLE.id());
+
+		if (CONFIG.enableForEnchantingTable)
+			tags.add(FIRE_ASPECT_PRIMARY_ENCHANTABLE.id());
+
+		if (CONFIG.enableDamageInEnchantingTable)
+			tags.add(DAMAGE_PRIMARY_ENCHANTABLE.id());
 
 		for (var tag : tags) {
 			map.compute(tag, (k, entries) -> {

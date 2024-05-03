@@ -4,13 +4,16 @@
 	"package": "io.github.fourmisain.axesareweapons.common.mixin",
 	"compatibilityLevel": "JAVA_${java_version}",
 	"mixins": [
+		"EnchantmentDefinitionAccessor",
 		"EnchantmentHelperMixin",
 		"EnchantmentMixin",
-		"EnchantmentsMixin",
-		"ItemGroupsMixin",
-		"LuckEnchantmentMixin",
+		"MinecraftServerMixin",
 		"MiningToolItemMixin",
+		"RegistryLoaderMixin",
 		"TagGroupLoaderMixin"
+	],
+	"client": [
+		"ClientPlayNetworkHandlerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
