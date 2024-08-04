@@ -15,6 +15,6 @@ public abstract class ClientPlayNetworkHandlerMixin {
 	// runs on Render thread
 	@Inject(method = "<init>", at = @At("RETURN"))
 	private void setRegistryManager(MinecraftClient client, ClientConnection clientConnection, ClientConnectionState clientConnectionState, CallbackInfo ci) {
-		AxesAreWeaponsCommon.registryManager.set(clientConnectionState.receivedRegistries());
+		AxesAreWeaponsCommon.clientRegistryManager = clientConnectionState.receivedRegistries();
 	}
 }

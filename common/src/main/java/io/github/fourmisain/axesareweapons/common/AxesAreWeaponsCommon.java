@@ -8,6 +8,7 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Jankson;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.*;
@@ -23,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class AxesAreWeaponsCommon {
 	/** Items in this tag can be enchanted with Looting */
@@ -49,7 +51,8 @@ public class AxesAreWeaponsCommon {
 	public static final String MOD_ID = "axesareweapons";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-	public static ThreadLocal<DynamicRegistryManager> registryManager = ThreadLocal.withInitial(() -> null);
+	public static volatile DynamicRegistryManager serverRegistryManager = null;
+	public static volatile DynamicRegistryManager clientRegistryManager = null;
 
 	public static Identifier id(String id) {
 		return Identifier.of(MOD_ID, id);
@@ -70,6 +73,22 @@ public class AxesAreWeaponsCommon {
 
 	}
 
+	public static Identifier getEnchantmentId(Enchantment enchantment) {
+		// client and server have different Enchantment instances, being part of their respective registry manager
+
+		if (serverRegistryManager != null) {
+			Optional<Identifier> id = serverRegistryManager.getOptional(RegistryKeys.ENCHANTMENT).map(manager -> manager.getId(enchantment));
+			if (id.isPresent()) return id.get();
+		}
+
+		if (clientRegistryManager != null) {
+			Optional<Identifier> id = clientRegistryManager.getOptional(RegistryKeys.ENCHANTMENT).map(manager -> manager.getId(enchantment));
+			if (id.isPresent()) return id.get();
+		}
+
+		return null;
+	}
+
 	public static boolean isWeapon(Item item, boolean checkTags) {
 		var entry = item.getRegistryEntry();
 
@@ -82,9 +101,13 @@ public class AxesAreWeaponsCommon {
 	}
 
 	public static boolean isModdedSwordEnchantment(Enchantment enchantment) {
-		var enchantmentRegistry = registryManager.get().get(RegistryKeys.ENCHANTMENT);
+		Identifier id = getEnchantmentId(enchantment);
+		if (id == null) {
+			AxesAreWeaponsCommon.LOGGER.warn("couldn't get enchantment id for {}", enchantment);
+			return false;
+		}
 
-		boolean isModded = !enchantmentRegistry.getId(enchantment).getNamespace().equals("minecraft");
+		boolean isModded = id.getNamespace().equals("minecraft");
 		boolean isSwordEnchant = enchantment.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
 
 		return isModded && isSwordEnchant;

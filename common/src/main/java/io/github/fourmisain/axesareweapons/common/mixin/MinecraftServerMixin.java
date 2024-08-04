@@ -16,12 +16,12 @@ public abstract class MinecraftServerMixin {
 
 	// runs on Server thread
 	@Inject(method = "runServer", at = @At("HEAD"))
-	private void setServer(CallbackInfo ci) {
-		AxesAreWeaponsCommon.registryManager.set(getRegistryManager());
+	private void setRegistryManager(CallbackInfo ci) {
+		AxesAreWeaponsCommon.serverRegistryManager = getRegistryManager();
 	}
 
 	@Inject(method = "runServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;exit()V"))
-	private void unsetServer(CallbackInfo ci) {
-		AxesAreWeaponsCommon.registryManager.remove();
+	private void unsetRegistryManager(CallbackInfo ci) {
+		AxesAreWeaponsCommon.serverRegistryManager = null;
 	}
 }
