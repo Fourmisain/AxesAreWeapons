@@ -15,8 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.overrideCobWebMiningSpeed;
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.overrideCobWebSuitableness;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isSpeedyWeb;
 
 @Mod(AxesAreWeaponsCommon.MOD_ID)
 public class AxesAreWeapons {
@@ -24,15 +23,16 @@ public class AxesAreWeapons {
 		@SubscribeEvent
 		public void harvestCheck(PlayerEvent.HarvestCheck event) {
 			Item item = event.getEntity().getMainHandStack().getItem();
-			if (overrideCobWebSuitableness(item, event.getTargetBlock()))
+			if (isSpeedyWeb(item, event.getTargetBlock()))
 				event.setCanHarvest(true);
 		}
 
 		@SubscribeEvent
 		public void breakSpeed(PlayerEvent.BreakSpeed event) {
 			Item item = event.getEntity().getMainHandStack().getItem();
-			float cobWebsAreSpeed = overrideCobWebMiningSpeed(item, event.getState(), event.getOriginalSpeed());
-			event.setNewSpeed(cobWebsAreSpeed);
+			if (isSpeedyWeb(item, event.getState())) {
+				event.setNewSpeed(Math.max(event.getOriginalSpeed(), 15f));
+			}
 		}
 	}
 
