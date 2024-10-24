@@ -32,10 +32,15 @@ public abstract class EnchantmentHelperMixin {
 		}
 
 		var entries = cir.getReturnValue();
-		var enchantmentRegistry = serverRegistryManager.get(RegistryKeys.ENCHANTMENT);
+		var enchantmentRegistry = serverRegistryManager.getOptional(RegistryKeys.ENCHANTMENT);
+
+		if (enchantmentRegistry.isEmpty()) {
+			AxesAreWeaponsCommon.LOGGER.warn("couldn't get enchantment registry(?!)");
+			return;
+		}
 
 		// add all modded sword enchantments (for now)
-		for (var entry : enchantmentRegistry.getEntrySet()) {
+		for (var entry : enchantmentRegistry.get().getEntrySet()) {
 			var key = entry.getKey();
 			var enchantment = entry.getValue();
 
@@ -43,7 +48,7 @@ public abstract class EnchantmentHelperMixin {
 			boolean isSwordEnchantment = enchantment.isPrimaryItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
 
 			if (isModded && isSwordEnchantment) {
-				addEnchantmentEntry(entries, power, enchantmentRegistry.getEntry(enchantment));
+				addEnchantmentEntry(entries, power, enchantmentRegistry.get().getEntry(enchantment));
 			}
 		}
 	}
