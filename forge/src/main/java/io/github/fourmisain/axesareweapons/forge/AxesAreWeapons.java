@@ -36,12 +36,12 @@ public class AxesAreWeapons {
 		}
 	}
 
-	public AxesAreWeapons() {
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+	public AxesAreWeapons(FMLJavaModLoadingContext context) {
+		context.getModEventBus().addListener(this::commonSetup);
+		context.getModEventBus().addListener(this::clientSetup);
 		MinecraftForge.EVENT_BUS.register(new CobWebEventHandler());
 
-		ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+		context.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
 				() -> new ConfigScreenHandler.ConfigScreenFactory(
 						(client, parent) -> AutoConfig.getConfigScreen(AxesAreWeaponsConfig.class, parent).get()));
 	}
