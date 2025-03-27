@@ -95,7 +95,7 @@ public class AxesAreWeaponsCommon {
 		return item instanceof AxeItem
 			|| (CONFIG.shovelsAreWeapons && (item instanceof ShovelItem || (checkTags && entry.isIn(ItemTags.SHOVELS))))
 			|| (CONFIG.hoesAreWeapons && (item instanceof HoeItem || (checkTags && entry.isIn(ItemTags.HOES))))
-			|| (CONFIG.pickaxesAreWeapons && (item instanceof PickaxeItem || (checkTags && entry.isIn(ItemTags.PICKAXES))))
+			|| (CONFIG.pickaxesAreWeapons && checkTags && entry.isIn(ItemTags.PICKAXES))
 			|| (CONFIG.rangedWeaponsAreWeapons && item instanceof RangedWeaponItem)
 			|| CONFIG.weaponIds.contains(Registries.ITEM.getId(item));
 	}
@@ -119,7 +119,7 @@ public class AxesAreWeaponsCommon {
 
 	public static void addEnchantmentEntry(List<EnchantmentLevelEntry> entries, int power, RegistryEntry<Enchantment> enchantmentEntry) {
 		// don't add if already in the pool
-		if (entries.stream().anyMatch(entry -> entry.enchantment.matches(enchantmentEntry)))
+		if (entries.stream().anyMatch(entry -> entry.enchantment().matches(enchantmentEntry)))
 			return;
 
 		// add appropriate enchantment level for the given power
