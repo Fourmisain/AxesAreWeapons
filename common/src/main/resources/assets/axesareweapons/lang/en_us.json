@@ -27,5 +27,9 @@
   "text.autoconfig.axesareweapons.option.weaponIds": "Item IDs Are Weapons",
   "text.autoconfig.axesareweapons.option.weaponIds.@Tooltip": "Additional (enchantable) items that should be weapons\ne.g. minecraft:fishing_rod\nNote that not all general options may apply",
   "text.autoconfig.axesareweapons.category.default": "General",
-  "text.autoconfig.axesareweapons.category.alltoolsareweapons": "All Tools Are Weapons+"
+  "text.autoconfig.axesareweapons.category.alltoolsareweapons": "All Tools Are Weapons+",
+  "tag.item.c.enchantable.knockback": "Knockback Enchantables",
+  "tag.item.c.enchantable.mob_loot": "Looting Enchantables",
+  "tag.item.c.enchantable.damage_primary": "Primary Damage Enchantables",
+  "tag.item.c.enchantable.fire_aspect_primary": "Primary Fire Aspect Enchantables"
 }

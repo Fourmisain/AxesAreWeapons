@@ -27,5 +27,9 @@
   "text.autoconfig.axesareweapons.option.weaponIds": "Gegenstand-IDs sind Waffen",
   "text.autoconfig.axesareweapons.option.weaponIds.@Tooltip": "Zusätzliche (verzauberbare) Gegenstände die Waffen sein sollen\nz.B. minecraft:fishing_rod\nBemerke dass möglicherweise nicht alle allgemeinen Optionen funktionieren",
   "text.autoconfig.axesareweapons.category.default": "Allgemein",
-  "text.autoconfig.axesareweapons.category.alltoolsareweapons": "All Tools Are Weapons+"
+  "text.autoconfig.axesareweapons.category.alltoolsareweapons": "All Tools Are Weapons+",
+  "tag.item.c.enchantable.knockback": "Rückstoß-Verzauberbares",
+  "tag.item.c.enchantable.mob_loot": "Plünderung-Verzauberbares",
+  "tag.item.c.enchantable.damage_primary": "Primär Schadensverzauberbares",
+  "tag.item.c.enchantable.fire_aspect_primary": "Primär Verbrennung-Verzauberbares"
 }
