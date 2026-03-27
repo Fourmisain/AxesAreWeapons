@@ -3,7 +3,7 @@ package io.github.fourmisain.axesareweapons.common.config;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

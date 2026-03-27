@@ -2,32 +2,32 @@ package io.github.fourmisain.axesareweapons.common.config;
 
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.event.ConfigSerializeEvent;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.server.IntegratedServer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
 
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.LOGGER;
 
 public class DatapackReloadSaveListener implements ConfigSerializeEvent.Save<AxesAreWeaponsConfig> {
 	@Override
-	public ActionResult onSave(ConfigHolder<AxesAreWeaponsConfig> configHolder, AxesAreWeaponsConfig axesAreWeaponsConfig) {
-		MinecraftClient client = MinecraftClient.getInstance();
-		IntegratedServer server = client.getServer();
+	public InteractionResult onSave(ConfigHolder<AxesAreWeaponsConfig> configHolder, AxesAreWeaponsConfig axesAreWeaponsConfig) {
+		Minecraft client = Minecraft.getInstance();
+		IntegratedServer server = client.getSingleplayerServer();
 
-		if (!client.isIntegratedServerRunning())
-			return ActionResult.SUCCESS;
+		if (!client.hasSingleplayerServer())
+			return InteractionResult.SUCCESS;
 
-		server.reloadResources(server.getDataPackManager().getEnabledIds()).exceptionally(throwable -> {
+		server.reloadResources(server.getPackRepository().getSelectedIds()).exceptionally(throwable -> {
 			LOGGER.warn("failed to update item tags", throwable);
 
 			if (client.player != null)
-				client.player.sendMessage(Text.translatable("commands.reload.failure").formatted(Formatting.RED), false);
+				client.player.displayClientMessage(Component.translatable("commands.reload.failure").withStyle(ChatFormatting.RED), false);
 
 			return null;
 		});
 
-		return ActionResult.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 }

@@ -6,19 +6,18 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Jankson;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
-import net.minecraft.item.*;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,41 +27,41 @@ import java.util.Optional;
 
 public class AxesAreWeaponsCommon {
 	/** Items in this tag can be enchanted with Looting */
-	public static final TagKey<Item> MOB_LOOT_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/mob_loot"));
+	public static final TagKey<Item> MOB_LOOT_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/mob_loot"));
 	/** Items in this tag can be enchanted with Knockback */
-	public static final TagKey<Item> KNOCKBACK_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/knockback"));
+	public static final TagKey<Item> KNOCKBACK_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/knockback"));
 	/** Items in this tag can be enchanted with Fire Aspect in the Enchanting Table */
-	public static final TagKey<Item> FIRE_ASPECT_PRIMARY_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/fire_aspect_primary"));
+	public static final TagKey<Item> FIRE_ASPECT_PRIMARY_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/fire_aspect_primary"));
 	/** Items in this tag can be enchanted with Sharpness, Bane of Arthropods and Smite in the Enchanting Table */
-	public static final TagKey<Item> DAMAGE_PRIMARY_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/damage_primary"));
+	public static final TagKey<Item> DAMAGE_PRIMARY_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/damage_primary"));
 
 	public static final Map<Identifier, TagKey<Item>> SUPPORTED_ITEMS_OVERWRITES = Map.of(
-		Identifier.ofVanilla("looting"), MOB_LOOT_ENCHANTABLE,
-		Identifier.ofVanilla("knockback"), KNOCKBACK_ENCHANTABLE
+		Identifier.withDefaultNamespace("looting"), MOB_LOOT_ENCHANTABLE,
+		Identifier.withDefaultNamespace("knockback"), KNOCKBACK_ENCHANTABLE
 	);
 
 	public static final Map<Identifier, TagKey<Item>> PRIMARY_ITEMS_OVERWRITES = Map.of(
-		Identifier.ofVanilla("fire_aspect"), FIRE_ASPECT_PRIMARY_ENCHANTABLE,
-		Identifier.ofVanilla("sharpness"), DAMAGE_PRIMARY_ENCHANTABLE,
-		Identifier.ofVanilla("bane_of_arthropods"), DAMAGE_PRIMARY_ENCHANTABLE,
-		Identifier.ofVanilla("smite"), DAMAGE_PRIMARY_ENCHANTABLE
+		Identifier.withDefaultNamespace("fire_aspect"), FIRE_ASPECT_PRIMARY_ENCHANTABLE,
+		Identifier.withDefaultNamespace("sharpness"), DAMAGE_PRIMARY_ENCHANTABLE,
+		Identifier.withDefaultNamespace("bane_of_arthropods"), DAMAGE_PRIMARY_ENCHANTABLE,
+		Identifier.withDefaultNamespace("smite"), DAMAGE_PRIMARY_ENCHANTABLE
 	);
 
 	public static final String MOD_ID = "axesareweapons";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-	public static volatile DynamicRegistryManager serverRegistryManager = null;
-	public static volatile DynamicRegistryManager clientRegistryManager = null;
+	public static volatile RegistryAccess serverRegistryAccess = null;
+	public static volatile RegistryAccess clientRegistryAccess = null;
 
 	public static Identifier id(String id) {
-		return Identifier.of(MOD_ID, id);
+		return Identifier.fromNamespaceAndPath(MOD_ID, id);
 	}
 
 	public final static AxesAreWeaponsConfig CONFIG;
 	static {
 		Jankson jankson = new Jankson.Builder()
 			.registerSerializer(Identifier.class, ((identifier, marshaller) -> marshaller.serialize(identifier.toString())))
-			.registerDeserializer(String.class, Identifier.class, (object, marshaller) -> Identifier.of(object)).build();
+			.registerDeserializer(String.class, Identifier.class, (object, marshaller) -> Identifier.parse(object)).build();
 
 		ConfigHolder<AxesAreWeaponsConfig> configHolder = AutoConfig.register(AxesAreWeaponsConfig.class, (config, configClass) -> new JanksonConfigSerializer<>(config, configClass, jankson));
 		configHolder.registerSaveListener(new DatapackReloadSaveListener());
@@ -74,15 +73,15 @@ public class AxesAreWeaponsCommon {
 	}
 
 	public static Identifier getEnchantmentId(Enchantment enchantment) {
-		// client and server have different Enchantment instances, being part of their respective registry manager
+		// client and server have different Enchantment instances, being part of their respective registry
 
-		if (serverRegistryManager != null) {
-			Optional<Identifier> id = serverRegistryManager.getOptional(RegistryKeys.ENCHANTMENT).map(manager -> manager.getId(enchantment));
+		if (serverRegistryAccess != null) {
+			Optional<Identifier> id = serverRegistryAccess.lookup(Registries.ENCHANTMENT).map(manager -> manager.getKey(enchantment));
 			if (id.isPresent()) return id.get();
 		}
 
-		if (clientRegistryManager != null) {
-			Optional<Identifier> id = clientRegistryManager.getOptional(RegistryKeys.ENCHANTMENT).map(manager -> manager.getId(enchantment));
+		if (clientRegistryAccess != null) {
+			Optional<Identifier> id = clientRegistryAccess.lookup(Registries.ENCHANTMENT).map(manager -> manager.getKey(enchantment));
 			if (id.isPresent()) return id.get();
 		}
 
@@ -90,14 +89,14 @@ public class AxesAreWeaponsCommon {
 	}
 
 	public static boolean isWeapon(Item item, boolean checkTags) {
-		var entry = item.getRegistryEntry();
+		var entry = item.builtInRegistryHolder();
 
 		return item instanceof AxeItem
-			|| (CONFIG.shovelsAreWeapons && (item instanceof ShovelItem || (checkTags && entry.isIn(ItemTags.SHOVELS))))
-			|| (CONFIG.hoesAreWeapons && (item instanceof HoeItem || (checkTags && entry.isIn(ItemTags.HOES))))
-			|| (CONFIG.pickaxesAreWeapons && checkTags && entry.isIn(ItemTags.PICKAXES))
-			|| (CONFIG.rangedWeaponsAreWeapons && item instanceof RangedWeaponItem)
-			|| CONFIG.weaponIds.contains(Registries.ITEM.getId(item));
+			|| (CONFIG.shovelsAreWeapons && (item instanceof ShovelItem || (checkTags && entry.is(ItemTags.SHOVELS))))
+			|| (CONFIG.hoesAreWeapons && (item instanceof HoeItem || (checkTags && entry.is(ItemTags.HOES))))
+			|| (CONFIG.pickaxesAreWeapons && checkTags && entry.is(ItemTags.PICKAXES))
+			|| (CONFIG.rangedWeaponsAreWeapons && item instanceof ProjectileWeaponItem)
+			|| CONFIG.weaponIds.contains(BuiltInRegistries.ITEM.getKey(item));
 	}
 
 	public static boolean isModdedSwordEnchantment(Enchantment enchantment) {
@@ -108,7 +107,7 @@ public class AxesAreWeaponsCommon {
 		}
 
 		boolean isModded = id.getNamespace().equals("minecraft");
-		boolean isSwordEnchant = enchantment.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
+		boolean isSwordEnchant = enchantment.canEnchant(Items.DIAMOND_SWORD.getDefaultInstance()); // approximate solution
 
 		return isModded && isSwordEnchant;
 	}
@@ -117,16 +116,16 @@ public class AxesAreWeaponsCommon {
 		return CONFIG.fastCobWebBreaking && state.getBlock() == Blocks.COBWEB && isWeapon(item, true);
 	}
 
-	public static void addEnchantmentEntry(List<EnchantmentLevelEntry> entries, int power, RegistryEntry<Enchantment> enchantmentEntry) {
+	public static void addEnchantmentEntry(List<EnchantmentInstance> entries, int power, Holder<Enchantment> enchantmentEntry) {
 		// don't add if already in the pool
-		if (entries.stream().anyMatch(entry -> entry.enchantment().matches(enchantmentEntry)))
+		if (entries.stream().anyMatch(entry -> entry.enchantment().is(enchantmentEntry)))
 			return;
 
 		// add appropriate enchantment level for the given power
 		Enchantment enchantment = enchantmentEntry.value();
 		for (int level = enchantment.getMaxLevel(); level >= enchantment.getMinLevel(); level--) {
-			if (enchantment.getMinPower(level) <= power && power <= enchantment.getMaxPower(level)) {
-				entries.add(new EnchantmentLevelEntry(enchantmentEntry, level));
+			if (enchantment.getMinCost(level) <= power && power <= enchantment.getMaxCost(level)) {
+				entries.add(new EnchantmentInstance(enchantmentEntry, level));
 				break;
 			}
 		}

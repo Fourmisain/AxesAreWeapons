@@ -1,2 +1,2 @@
 accessWidener v2 named
-accessible class net/minecraft/item/ItemGroup$StackVisibility
+accessible class net/minecraft/world/item/CreativeModeTab$TabVisibility

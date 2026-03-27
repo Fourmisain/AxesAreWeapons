@@ -1,7 +1,7 @@
 package io.github.fourmisain.axesareweapons.common.mixin;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,10 +17,10 @@ public abstract class ItemStackMixin {
 	// we could change the weapon component's itemDamagePerAttack default inside Item.Settings.axe(), hoe() etc,
 	// but this doesn't allow checking item tags and may be bypassed by using Item.Settings.tool() directly
 	@ModifyArg(
-		method = "postDamageEntity",
+		method = "postHurtEnemy",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V"
+			target = "Lnet/minecraft/world/item/ItemStack;hurtAndBreak(ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V"
 		)
 	)
 	public int axesareweapons$disableIncreasedAxeDurabilityLoss(int amount) {

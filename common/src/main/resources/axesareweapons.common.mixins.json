@@ -9,11 +9,11 @@
 		"EnchantmentMixin",
 		"ItemStackMixin",
 		"MinecraftServerMixin",
-		"RegistryLoaderMixin",
-		"TagGroupLoaderMixin"
+		"RegistryDataLoaderMixin",
+		"TagLoaderMixin"
 	],
 	"client": [
-		"ClientPlayNetworkHandlerMixin"
+		"ClientPacketListenerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
