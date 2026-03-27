@@ -4,6 +4,7 @@ import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon;
 import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommonClient;
 import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
 import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.AutoConfigClient;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -41,7 +42,7 @@ public class AxesAreWeapons {
 		NeoForge.EVENT_BUS.register(new CobWebEventHandler());
 
 		ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () ->
-			(client, parent) -> AutoConfig.getConfigScreen(AxesAreWeaponsConfig.class, parent).get());
+			(client, parent) -> AutoConfigClient.getConfigScreen(AxesAreWeaponsConfig.class, parent).get());
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {

@@ -23,7 +23,7 @@ public class DatapackReloadSaveListener implements ConfigSerializeEvent.Save<Axe
 			LOGGER.warn("failed to update item tags", throwable);
 
 			if (client.player != null)
-				client.player.displayClientMessage(Component.translatable("commands.reload.failure").withStyle(ChatFormatting.RED), false);
+				client.player.sendSystemMessage(Component.translatable("commands.reload.failure").withStyle(ChatFormatting.RED));
 
 			return null;
 		});

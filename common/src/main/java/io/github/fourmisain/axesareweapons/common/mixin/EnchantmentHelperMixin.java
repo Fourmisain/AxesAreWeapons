@@ -27,7 +27,7 @@ public abstract class EnchantmentHelperMixin {
 			return;
 
 		if (serverRegistryAccess == null) {
-			AxesAreWeaponsCommon.LOGGER.warn("couldn't get server registry manager");
+			AxesAreWeaponsCommon.LOGGER.warn("couldn't get server registry access");
 			return;
 		}
 
