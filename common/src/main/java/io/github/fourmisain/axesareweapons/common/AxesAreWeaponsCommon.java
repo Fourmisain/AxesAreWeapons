@@ -28,8 +28,12 @@ import java.util.Optional;
 public class AxesAreWeaponsCommon {
 	/** Items in this tag can be enchanted with Looting */
 	public static final TagKey<Item> MOB_LOOT_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/mob_loot"));
+	/** Items in this tag can be enchanted with Looting in the Enchanting Table */
+	public static final TagKey<Item> MOB_LOOT_PRIMARY_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/mob_loot_primary"));
 	/** Items in this tag can be enchanted with Knockback */
 	public static final TagKey<Item> KNOCKBACK_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/knockback"));
+	/** Items in this tag can be enchanted with Knockback in the Enchanting Table */
+	public static final TagKey<Item> KNOCKBACK_PRIMARY_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/knockback_primary"));
 	/** Items in this tag can be enchanted with Fire Aspect in the Enchanting Table */
 	public static final TagKey<Item> FIRE_ASPECT_PRIMARY_ENCHANTABLE = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "enchantable/fire_aspect_primary"));
 	/** Items in this tag can be enchanted with Sharpness, Bane of Arthropods and Smite in the Enchanting Table */
@@ -41,6 +45,8 @@ public class AxesAreWeaponsCommon {
 	);
 
 	public static final Map<Identifier, TagKey<Item>> PRIMARY_ITEMS_OVERWRITES = Map.of(
+		Identifier.withDefaultNamespace("looting"), MOB_LOOT_PRIMARY_ENCHANTABLE,
+		Identifier.withDefaultNamespace("knockback"), KNOCKBACK_PRIMARY_ENCHANTABLE,
 		Identifier.withDefaultNamespace("fire_aspect"), FIRE_ASPECT_PRIMARY_ENCHANTABLE,
 		Identifier.withDefaultNamespace("sharpness"), DAMAGE_PRIMARY_ENCHANTABLE,
 		Identifier.withDefaultNamespace("bane_of_arthropods"), DAMAGE_PRIMARY_ENCHANTABLE,

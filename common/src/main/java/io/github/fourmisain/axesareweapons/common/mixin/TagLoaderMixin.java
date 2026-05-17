@@ -59,8 +59,16 @@ public abstract class TagLoaderMixin {
 		if (CONFIG.enableFireAspect)
 			tags.add(ItemTags.FIRE_ASPECT_ENCHANTABLE.location());
 
-		if (CONFIG.enableForEnchantingTable)
-			tags.add(FIRE_ASPECT_PRIMARY_ENCHANTABLE.location());
+		if (CONFIG.enableForEnchantingTable) {
+			if (CONFIG.enableLooting)
+				tags.add(MOB_LOOT_PRIMARY_ENCHANTABLE.location());
+
+			if (CONFIG.enableKnockback)
+				tags.add(KNOCKBACK_PRIMARY_ENCHANTABLE.location());
+
+			if (CONFIG.enableFireAspect)
+				tags.add(FIRE_ASPECT_PRIMARY_ENCHANTABLE.location());
+		}
 
 		if (CONFIG.enableDamageInEnchantingTable)
 			tags.add(DAMAGE_PRIMARY_ENCHANTABLE.location());
