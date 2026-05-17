@@ -8,7 +8,6 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Jankson;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.*;
@@ -29,8 +28,12 @@ import java.util.Optional;
 public class AxesAreWeaponsCommon {
 	/** Items in this tag can be enchanted with Looting */
 	public static final TagKey<Item> MOB_LOOT_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/mob_loot"));
+	/** Items in this tag can be enchanted with Looting in the Enchanting Table */
+	public static final TagKey<Item> MOB_LOOT_PRIMARY_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/mob_loot_primary"));
 	/** Items in this tag can be enchanted with Knockback */
 	public static final TagKey<Item> KNOCKBACK_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/knockback"));
+	/** Items in this tag can be enchanted with Knockback in the Enchanting Table */
+	public static final TagKey<Item> KNOCKBACK_PRIMARY_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/knockback_primary"));
 	/** Items in this tag can be enchanted with Fire Aspect in the Enchanting Table */
 	public static final TagKey<Item> FIRE_ASPECT_PRIMARY_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "enchantable/fire_aspect_primary"));
 	/** Items in this tag can be enchanted with Sharpness, Bane of Arthropods and Smite in the Enchanting Table */
@@ -42,6 +45,8 @@ public class AxesAreWeaponsCommon {
 	);
 
 	public static final Map<Identifier, TagKey<Item>> PRIMARY_ITEMS_OVERWRITES = Map.of(
+		Identifier.ofVanilla("looting"), MOB_LOOT_PRIMARY_ENCHANTABLE,
+		Identifier.ofVanilla("knockback"), KNOCKBACK_PRIMARY_ENCHANTABLE,
 		Identifier.ofVanilla("fire_aspect"), FIRE_ASPECT_PRIMARY_ENCHANTABLE,
 		Identifier.ofVanilla("sharpness"), DAMAGE_PRIMARY_ENCHANTABLE,
 		Identifier.ofVanilla("bane_of_arthropods"), DAMAGE_PRIMARY_ENCHANTABLE,
