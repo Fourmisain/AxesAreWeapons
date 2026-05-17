@@ -26,7 +26,7 @@ import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.SU
 public abstract class RegistryLoaderMixin {
 	@Shadow @Final private static Logger LOGGER;
 
-	@ModifyExpressionValue(method = "parseAndAdd", at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/DataResult;getOrThrow()Ljava/lang/Object;"))
+	@ModifyExpressionValue(method = "parseAndAdd", at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/DataResult;getOrThrow()Ljava/lang/Object;", remap = false))
 	private static Object modifyEnchantmentTags(Object original, @Local(argsOnly = true) RegistryKey<?> key, @Local(argsOnly = true) RegistryOps<JsonElement> ops) {
 		if (!key.getRegistry().equals(Identifier.ofVanilla("enchantment")))
 			return original;
