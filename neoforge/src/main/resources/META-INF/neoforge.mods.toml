@@ -27,7 +27,7 @@ side = "BOTH"
 [[dependencies.axesareweapons]]
 modId = "minecraft"
 mandatory = true
-versionRange = "${forge_game_version_range}"
+versionRange = "${neoforge_game_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
