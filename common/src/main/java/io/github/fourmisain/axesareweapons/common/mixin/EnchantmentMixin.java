@@ -6,39 +6,62 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.*;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
-	@Shadow
-	public abstract boolean isSupportedItem(ItemStack stack);
+	@Unique
+	private static boolean axesareweapons$allowSupported(ItemStack stack, Enchantment enchantment) {
+		return CONFIG.enableModded && isWeapon(stack.getItem(), true) && isModdedSwordEnchantment(enchantment);
+	}
+
+	@Unique
+	private static boolean axesareweapons$allowPrimary(ItemStack stack, Enchantment enchantment) {
+		return CONFIG.enableModded && CONFIG.enableForEnchantingTable && isWeapon(stack.getItem(), true) && isPrimaryModdedSwordEnchantment(enchantment);
+	}
 
 	@ModifyReturnValue(method = "isAcceptableItem", at = @At("RETURN"))
 	public boolean axesareweapons$acceptModdedSwordEnchantments(boolean original, @Local(argsOnly = true) ItemStack stack) {
 		Enchantment self = (Enchantment) (Object) this;
 
-		// prevent isModdedSwordEnchantment() stack overflow when diamond sword is added to the weapon list - just in case
+		// prevent potential stack overflow with isModdedSwordEnchantment()
 		if (stack.isOf(Items.DIAMOND_SWORD))
 			return original;
 
-		if (CONFIG.enableModded && isWeapon(stack.getItem(), true) && isModdedSwordEnchantment(self)) {
+		if (axesareweapons$allowSupported(stack, self))
 			return true;
-		}
+
+		return original;
+	}
+
+	// isSupportedItem() is a copy of canEnchant() that is literally only used in isPrimaryItem(), but just in case...
+	@ModifyReturnValue(method = "isSupportedItem", at = @At("RETURN"))
+	public boolean axesareweapons$makeSupportedForModdedSwordEnchantments(boolean original, @Local(argsOnly = true) ItemStack stack) {
+		Enchantment self = (Enchantment) (Object) this;
+
+		// not needed, let's do it anyway
+		if (stack.isOf(Items.DIAMOND_SWORD))
+			return original;
+
+		if (axesareweapons$allowSupported(stack, self))
+			return true;
 
 		return original;
 	}
 
 	@ModifyReturnValue(method = "isPrimaryItem", at = @At("RETURN"))
-	public boolean axesareweapons$enableForEnchantingTable(boolean original, @Local(argsOnly = true) ItemStack stack) {
+	public boolean axesareweapons$makePrimaryForModdedSwordEnchantments(boolean original, @Local(argsOnly = true) ItemStack stack) {
 		Enchantment self = (Enchantment) (Object) this;
 
-		if (CONFIG.enableModded && CONFIG.enableForEnchantingTable && isSupportedItem(stack) &&
-				isWeapon(stack.getItem(), true) && isModdedSwordEnchantment(self)) {
+		// prevent potential stack overflow with isPrimaryModdedSwordEnchantment()
+		if (stack.isOf(Items.DIAMOND_SWORD))
+			return original;
+
+		if (axesareweapons$allowPrimary(stack, self))
 			return true;
-		}
 
 		return original;
 	}

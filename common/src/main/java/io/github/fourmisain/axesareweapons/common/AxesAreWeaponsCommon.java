@@ -9,19 +9,16 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Jankson;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.*;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -112,28 +109,19 @@ public class AxesAreWeaponsCommon {
 			return false;
 		}
 
-		boolean isModded = id.getNamespace().equals("minecraft");
+		boolean isModded = !id.getNamespace().equals("minecraft");
 		boolean isSwordEnchant = enchantment.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
 
 		return isModded && isSwordEnchant;
 	}
 
-	public static boolean isSpeedyWeb(Item item, BlockState state) {
-		return CONFIG.fastCobWebBreaking && state.getBlock() == Blocks.COBWEB && isWeapon(item, true);
+	public static boolean isPrimaryModdedSwordEnchantment(Enchantment enchantment) {
+		boolean isPrimarySwordEnchant = enchantment.isPrimaryItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
+
+		return isModdedSwordEnchantment(enchantment) && isPrimarySwordEnchant;
 	}
 
-	public static void addEnchantmentEntry(List<EnchantmentLevelEntry> entries, int power, RegistryEntry<Enchantment> enchantmentEntry) {
-		// don't add if already in the pool
-		if (entries.stream().anyMatch(entry -> entry.enchantment().matches(enchantmentEntry)))
-			return;
-
-		// add appropriate enchantment level for the given power
-		Enchantment enchantment = enchantmentEntry.value();
-		for (int level = enchantment.getMaxLevel(); level >= enchantment.getMinLevel(); level--) {
-			if (enchantment.getMinPower(level) <= power && power <= enchantment.getMaxPower(level)) {
-				entries.add(new EnchantmentLevelEntry(enchantmentEntry, level));
-				break;
-			}
-		}
+	public static boolean isSpeedyWeb(Item item, BlockState state) {
+		return CONFIG.fastCobWebBreaking && state.getBlock() == Blocks.COBWEB && isWeapon(item, true);
 	}
 }
