@@ -5,6 +5,7 @@
 	"compatibilityLevel": "JAVA_${java_version}",
 	"mixins": [
 		"AxeItemMixin",
+		"EnchantmentHelperMixin",
 		"ItemMixin",
 		"MiningToolItemMixin",
 		"PickaxeItemMixin",

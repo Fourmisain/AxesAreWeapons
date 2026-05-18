@@ -1,18 +1,19 @@
 package io.github.fourmisain.axesareweapons.fabric.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.overrideCobWebSuitableness;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isSpeedyWeb;
 
-@Mixin(value = Item.class, priority = 990)
+@Mixin(Item.class)
 public abstract class ItemMixin {
-	@Inject(method = "isSuitableFor", at = @At("HEAD"), cancellable = true)
-	public void cobWebsAreSuitable(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-		overrideCobWebSuitableness((Item) (Object) this, state, cir);
+	@SuppressWarnings("ConstantValue")
+	@ModifyReturnValue(method = "isSuitableFor", at = @At("RETURN"))
+	public boolean axesareweapons$cobWebsAreSuitable(boolean original, @Local(argsOnly = true) BlockState state) {
+		return original || isSpeedyWeb((Item) (Object) this, state);
 	}
 }

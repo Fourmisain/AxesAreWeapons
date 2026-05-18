@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id 'com.gradleup.shadow'
 }
 
 architectury {
@@ -9,7 +9,7 @@ architectury {
 
 loom {
     forge {
-        mixinConfig "axesareweapons.common.mixins.json"
+        mixinConfig "axesareweapons.common.mixins.json", "axesareweapons.forge.mixins.json"
     }
 }
 
@@ -26,7 +26,7 @@ dependencies {
 
     modApi "me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}"
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    common(project(path: ":common", configuration: "namedElements")) { transitive = false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }
 

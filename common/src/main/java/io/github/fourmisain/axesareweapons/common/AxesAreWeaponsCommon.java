@@ -7,16 +7,16 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Jankson;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AxesAreWeaponsCommon {
 	public static final String MOD_ID = "axesareweapons";
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	public final static AxesAreWeaponsConfig CONFIG;
 	static {
@@ -43,43 +43,47 @@ public class AxesAreWeaponsCommon {
 			|| CONFIG.weaponIds.contains(Registry.ITEM.getId(item));
 	}
 
-	public static void overrideCobWebMiningSpeed(Item item, BlockState state, CallbackInfoReturnable<Float> cir) {
-		if (!CONFIG.fastCobWebBreaking || state.getBlock() != Blocks.COBWEB || !isWeapon(item))
-			return;
+	public static boolean isModdedSwordEnchantment(Enchantment enchantment) {
+		Identifier id = Registry.ENCHANTMENT.getId(enchantment);
+		if (id == null) {
+			AxesAreWeaponsCommon.LOGGER.warn("couldn't get enchantment id for {}", enchantment);
+			return false;
+		}
 
-		if (cir.getReturnValue() < 15f)
-			cir.setReturnValue(15f);
+		boolean isModded = !id.getNamespace().equals("minecraft");
+		boolean isSwordEnchant = enchantment.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution, would previously check for EnchantmentTarget.WEAPON
+
+		return isModded && isSwordEnchant;
 	}
 
-	public static void overrideCobWebSuitableness(Item item, BlockState state, CallbackInfoReturnable<Boolean> cir) {
-		if (!CONFIG.fastCobWebBreaking || state.getBlock() != Blocks.COBWEB || !isWeapon(item))
-			return;
-
-		cir.setReturnValue(true);
-	}
-
-	public static float overrideCobWebMiningSpeed(Item item, BlockState state, float miningSpeed) {
-		if (!CONFIG.fastCobWebBreaking || state.getBlock() != Blocks.COBWEB || !isWeapon(item))
-			return miningSpeed;
-
-		return 15f;
-	}
-
-	public static boolean overrideCobWebSuitableness(Item item, BlockState state) {
+	public static boolean isSpeedyWeb(Item item, BlockState state) {
 		return CONFIG.fastCobWebBreaking && state.getBlock() == Blocks.COBWEB && isWeapon(item);
 	}
 
-	public static void addEnchantmentEntry(List<EnchantmentLevelEntry> entries, int power, Enchantment enchantment) {
-		// don't add if already in the pool
-		if (entries.stream().anyMatch(entry -> entry.enchantment == enchantment))
-			return;
+	@SuppressWarnings("RedundantIfStatement")
+	public static boolean allowEnchantment(boolean inEnchantingTable, Enchantment enchantment, ItemStack stack) {
+		// Looting for (cross) bows
+		if (CONFIG.enableLootingForRangedWeapons && enchantment == Enchantments.LOOTING && stack.getItem() instanceof RangedWeaponItem)
+			return true;
 
-		// add appropriate enchantment level for the given power
-		for (int level = enchantment.getMaxLevel(); level >= enchantment.getMinLevel(); level--) {
-			if (enchantment.getMinPower(level) <= power && power <= enchantment.getMaxPower(level)) {
-				entries.add(new EnchantmentLevelEntry(enchantment, level));
-				break;
+		if (isWeapon(stack.getItem())) {
+			if (!inEnchantingTable || CONFIG.enableDamageInEnchantingTable) {
+				if (enchantment == Enchantments.SHARPNESS || enchantment == Enchantments.SMITE || enchantment == Enchantments.BANE_OF_ARTHROPODS) {
+					return true;
+				}
+			}
+
+			if (CONFIG.enableLooting && enchantment == Enchantments.LOOTING
+				|| CONFIG.enableKnockback && enchantment == Enchantments.KNOCKBACK
+				|| CONFIG.enableFireAspect && enchantment == Enchantments.FIRE_ASPECT) {
+				return true;
+			}
+
+			if (CONFIG.enableModded && isModdedSwordEnchantment(enchantment)) {
+				return true;
 			}
 		}
+
+		return false;
 	}
 }

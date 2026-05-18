@@ -1,22 +1,36 @@
 package io.github.fourmisain.axesareweapons.fabric.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.*;
+import net.minecraft.item.MiningToolItem;
+import net.minecraft.item.ToolItem;
+import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.Vanishable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.overrideCobWebMiningSpeed;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isSpeedyWeb;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isWeapon;
 
-@Mixin(value = MiningToolItem.class, priority = 990)
+@Mixin(MiningToolItem.class)
 public abstract class MiningToolItemMixin extends ToolItem implements Vanishable {
-	public MiningToolItemMixin(ToolMaterial toolMaterial, Settings settings) {
-		super(toolMaterial, settings);
+	public MiningToolItemMixin(ToolMaterial material, Settings settings) {
+		super(material, settings);
 	}
 
-	@Inject(method = "getMiningSpeedMultiplier", at = @At("RETURN"), cancellable = true)
-	public void cobWebsAreSpeed(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> cir) {
-		overrideCobWebMiningSpeed(this, state, cir);
+	@ModifyExpressionValue(method = "postHit", at = @At(value = "CONSTANT", args = "intValue=2"))
+	public int axesareweapons$disableIncreasedAxeDurabilityLoss(int damageAmount) {
+		if (isWeapon(this)) return 1;
+		return damageAmount;
+	}
+
+	@ModifyExpressionValue(method = "getMiningSpeedMultiplier", at = @At(value = "CONSTANT", args = "floatValue=1.0f"))
+	public float axesareweapons$cobWebsAreSpeed(float miningSpeed, @Local(argsOnly = true) BlockState state) {
+		if (isSpeedyWeb(this, state)) {
+			return Math.max(miningSpeed, 15f);
+		}
+
+		return miningSpeed;
 	}
 }
