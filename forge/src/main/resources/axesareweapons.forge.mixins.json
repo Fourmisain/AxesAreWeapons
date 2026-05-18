@@ -6,7 +6,6 @@
 	"mixins": [
 		"EnchantmentMixin"
 	],
-	"plugin": "io.github.fourmisain.axesareweapons.forge.MixinPlugin",
 	"injectors": {
 		"defaultRequire": 1
 	}
