@@ -1,4 +1,4 @@
-package io.github.fourmisain.axesareweapons.common.mixin;
+package io.github.fourmisain.axesareweapons.forge.mixin;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
@@ -7,17 +7,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
 import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.allowEnchantment;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
-	@Inject(method = "isAcceptableItem", at = @At("RETURN"), cancellable = true)
-	public void enableAxeEnchantments(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
-		if (cir.getReturnValue()) return; // already accepted
-
+	@Inject(method = "canApplyAtEnchantingTable", at = @At("HEAD"), cancellable = true)
+	private void axesareweapons$allowEnchantment(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
 		Enchantment self = (Enchantment) (Object) this;
 
-		if (allowEnchantment(false, self, itemStack))
+		if (CONFIG.enableForEnchantingTable && allowEnchantment(true, self, itemStack))
 			cir.setReturnValue(true);
 	}
 }
