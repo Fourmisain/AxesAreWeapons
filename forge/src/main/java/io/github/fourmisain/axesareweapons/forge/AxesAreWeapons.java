@@ -4,6 +4,7 @@ import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon;
 import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommonClient;
 import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.ConfigGuiHandler;
@@ -18,8 +19,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkConstants;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.overrideCobWebMiningSpeed;
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.overrideCobWebSuitableness;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isSpeedyWeb;
 
 @Mod(AxesAreWeaponsCommon.MOD_ID)
 public class AxesAreWeapons {
@@ -28,7 +28,7 @@ public class AxesAreWeapons {
 		public void harvestCheck(PlayerEvent.HarvestCheck event) {
 			if (event.getEntity() instanceof PlayerEntity player) {
 				Item item = player.getMainHandStack().getItem();
-				if (overrideCobWebSuitableness(item, event.getTargetBlock()))
+				if (isSpeedyWeb(item, event.getTargetBlock()))
 					event.setCanHarvest(true);
 			}
 		}
@@ -37,8 +37,8 @@ public class AxesAreWeapons {
 		public void breakSpeed(PlayerEvent.BreakSpeed event) {
 			if (event.getEntity() instanceof PlayerEntity player) {
 				Item item = player.getMainHandStack().getItem();
-				float cobWebsAreSpeed = overrideCobWebMiningSpeed(item, event.getState(), event.getOriginalSpeed());
-				event.setNewSpeed(cobWebsAreSpeed);
+				if (isSpeedyWeb(item, event.getState()))
+					event.setNewSpeed(Math.max(event.getOriginalSpeed(), 15f));
 			}
 		}
 	}

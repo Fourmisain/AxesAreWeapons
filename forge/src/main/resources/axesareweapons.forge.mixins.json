@@ -1,11 +1,10 @@
 {
 	"required": true,
 	"minVersion": "0.8",
-	"package": "io.github.fourmisain.axesareweapons.fabric.mixin",
+	"package": "io.github.fourmisain.axesareweapons.forge.mixin",
 	"compatibilityLevel": "JAVA_${java_version}",
 	"mixins": [
-		"EnchantmentHelperMixin",
-		"MiningToolItemMixin"
+		"EnchantmentMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
