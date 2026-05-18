@@ -3,7 +3,6 @@ package io.github.fourmisain.axesareweapons.neoforge;
 import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon;
 import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommonClient;
 import io.github.fourmisain.axesareweapons.common.config.AxesAreWeaponsConfig;
-import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.AutoConfigClient;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;

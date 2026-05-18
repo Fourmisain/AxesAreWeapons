@@ -20,6 +20,7 @@ import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.SU
 
 @Mixin(targets = "net.minecraft.resources.RegistryLoadTask$PendingRegistration")
 public abstract class RegistryDataLoaderMixin {
+	// runs on worker threads
 	@ModifyExpressionValue(method = "loadFromResource", at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/DataResult;getOrThrow()Ljava/lang/Object;"))
 	private static Object modifyEnchantmentTags(Object original, @Local(argsOnly = true) ResourceKey<?> key, @Local(argsOnly = true) RegistryOps<JsonElement> ops) {
 		if (!key.registry().equals(Identifier.withDefaultNamespace("enchantment")))
