@@ -27,7 +27,7 @@ side="BOTH"
 [[dependencies.axesareweapons]]
 modId="minecraft"
 mandatory=true
-versionRange="${forge_game_version_range}"
+versionRange="${neoforge_game_version_range}"
 ordering="NONE"
 side="BOTH"
 
@@ -40,3 +40,6 @@ side="BOTH"
 
 [[mixins]]
 config = "axesareweapons.common.mixins.json"
+
+[[mixins]]
+config = "axesareweapons.neoforge.mixins.json"

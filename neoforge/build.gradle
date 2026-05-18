@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id 'com.gradleup.shadow'
 }
 
 architectury {
@@ -26,7 +26,7 @@ dependencies {
     implementation("io.github.llamalad7:mixinextras-neoforge:${project.mixinextras_version}")
     modApi "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    common(project(path: ":common", configuration: "namedElements")) { transitive = false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 }
 
