@@ -1,34 +1,44 @@
 package io.github.fourmisain.axesareweapons.common.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
+import io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.CONFIG;
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isWeapon;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.*;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
-	@Inject(method = "isAcceptableItem", at = @At("RETURN"), cancellable = true)
-	public void axesareweapons$addModdedSwordEnchantments(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if (cir.getReturnValue()) return; // already accepted
+	@ModifyReturnValue(method = "isAcceptableItem", at = @At("RETURN"))
+	public boolean axesareweapons$acceptModdedSwordEnchantments(boolean original, @Local(argsOnly = true) ItemStack stack) {
+		Enchantment self = (Enchantment) (Object) this;
 
-		if (CONFIG.enableModded && isWeapon(stack.getItem(), true)) {
-			Enchantment self = (Enchantment) (Object) this;
-			Identifier id = Registries.ENCHANTMENT.getId(self);
+		// prevent potential stack overflow with isModdedSwordEnchantment()
+		if (stack.isOf(Items.DIAMOND_SWORD))
+			return original;
 
-			boolean isModded = id != null && !id.getNamespace().equals("minecraft");
-			boolean isSwordEnchant = self.isAcceptableItem(Items.DIAMOND_SWORD.getDefaultStack()); // approximate solution
+		if (AxesAreWeaponsCommon.CONFIG.enableModded && isWeapon(stack.getItem(), true) && isModdedSwordEnchantment(self))
+			return true;
 
-			if (isModded && isSwordEnchant) {
-				cir.setReturnValue(true);
-			}
-		}
+		return original;
+	}
+
+	@ModifyReturnValue(method = "isPrimaryItem", at = @At("RETURN"))
+	public boolean axesareweapons$makePrimaryForModdedSwordEnchantments(boolean original, @Local(argsOnly = true) ItemStack stack) {
+		Enchantment self = (Enchantment) (Object) this;
+
+		// prevent potential stack overflow with isPrimaryModdedSwordEnchantment()
+		if (stack.isOf(Items.DIAMOND_SWORD))
+			return original;
+
+		if (AxesAreWeaponsCommon.CONFIG.enableModded && AxesAreWeaponsCommon.CONFIG.enableForEnchantingTable
+				&& isWeapon(stack.getItem(), true) && isPrimaryModdedSwordEnchantment(self))
+			return true;
+
+		return original;
 	}
 }

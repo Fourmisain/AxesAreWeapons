@@ -1,47 +1,37 @@
 package io.github.fourmisain.axesareweapons.common.mixin;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.KNOCKBACK_ENCHANTABLE;
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.MOB_LOOT_ENCHANTABLE;
+import java.util.Optional;
+
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.PRIMARY_ITEMS_OVERWRITES;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.SUPPORTED_ITEMS_OVERWRITES;
 
 @Mixin(Enchantments.class)
 public abstract class EnchantmentsMixin {
-	@ModifyArg(
-		method = "<clinit>",
-		slice = @Slice(
-			from = @At(value = "CONSTANT", args = "stringValue=looting")
-		),
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/enchantment/Enchantment;properties(Lnet/minecraft/registry/tag/TagKey;IILnet/minecraft/enchantment/Enchantment$Cost;Lnet/minecraft/enchantment/Enchantment$Cost;I[Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/enchantment/Enchantment$Properties;",
-			ordinal = 0
-		),
-		index = 0
-	)
-	private static TagKey<Item> axesareweapons$useCommonLootingTag(TagKey<Item> supportedItems) {
-		return MOB_LOOT_ENCHANTABLE;
-	}
+	// only works for vanilla enchantments
+	@Inject(method = "register", at = @At("HEAD"))
+	private static void axesareweapons$overrideSupportedAndPrimaryItems(String name, Enchantment enchantment, CallbackInfoReturnable<Enchantment> cir) {
+		var id = new Identifier(name);
 
-	@ModifyArg(
-		method = "<clinit>",
-		slice = @Slice(
-			from = @At(value = "CONSTANT", args = "stringValue=knockback")
-		),
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/enchantment/Enchantment;properties(Lnet/minecraft/registry/tag/TagKey;IILnet/minecraft/enchantment/Enchantment$Cost;Lnet/minecraft/enchantment/Enchantment$Cost;I[Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/enchantment/Enchantment$Properties;",
-			ordinal = 0
-		),
-		index = 0
-	)
-	private static TagKey<Item> axesareweapons$useCommonKnockbackTag(TagKey<Item> supportedItems) {
-		return KNOCKBACK_ENCHANTABLE;
+		var access = (EnchantmentPropertiesAccessor) (Object) ((EnchantmentAccessor) enchantment).getProperties();
+		if (access == null)
+			return;
+
+		var tagKey = SUPPORTED_ITEMS_OVERWRITES.get(id);
+		if (tagKey != null) {
+			access.setSupportedItems(tagKey);
+		}
+
+		tagKey = PRIMARY_ITEMS_OVERWRITES.get(id);
+		if (tagKey != null) {
+			access.setPrimaryItems(Optional.of(tagKey));
+		}
 	}
 }

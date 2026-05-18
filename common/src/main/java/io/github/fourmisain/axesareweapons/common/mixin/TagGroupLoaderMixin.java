@@ -59,6 +59,20 @@ public abstract class TagGroupLoaderMixin {
 		if (CONFIG.enableFireAspect)
 			tags.add(ItemTags.FIRE_ASPECT_ENCHANTABLE.id());
 
+		if (CONFIG.enableForEnchantingTable) {
+			if (CONFIG.enableLooting)
+				tags.add(MOB_LOOT_PRIMARY_ENCHANTABLE.id());
+
+			if (CONFIG.enableKnockback)
+				tags.add(KNOCKBACK_PRIMARY_ENCHANTABLE.id());
+
+			if (CONFIG.enableFireAspect)
+				tags.add(FIRE_ASPECT_PRIMARY_ENCHANTABLE.id());
+		}
+
+		if (CONFIG.enableDamageInEnchantingTable)
+			tags.add(DAMAGE_PRIMARY_ENCHANTABLE.id());
+
 		for (var tag : tags) {
 			map.compute(tag, (k, entries) -> {
 				var newEntries = (entries == null ? new ArrayList<TrackedEntry>() : entries);

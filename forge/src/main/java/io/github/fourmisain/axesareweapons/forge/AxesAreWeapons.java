@@ -15,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.*;
+import static io.github.fourmisain.axesareweapons.common.AxesAreWeaponsCommon.isSpeedyWeb;
 
 @Mod(AxesAreWeaponsCommon.MOD_ID)
 public class AxesAreWeapons {
