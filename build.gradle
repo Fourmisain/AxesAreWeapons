@@ -1,6 +1,7 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.4-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.13-SNAPSHOT" apply false
+    id 'com.gradleup.shadow' version '8.3.+' apply false
     id "com.matthewprenger.cursegradle" version "1.4.0" apply false
     id "com.modrinth.minotaur" version "2.+" apply false
     id "minepkg-publish" version "latest.release" apply false
@@ -12,6 +13,14 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
+
+    loom {
+        runs {
+            client {
+                vmArgs "-Dfabric-tag-conventions-v2.missingTagTranslationWarning=VERBOSE"
+            }
+        }
+    }
 
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
@@ -51,13 +60,11 @@ allprojects {
 subprojects {
     processResources {
         def stringProperties = providers.gradlePropertiesPrefixedBy('').get()
-        stringProperties.each { inputs.property(it.key, it.value) }
+        inputs.properties(stringProperties)
 
-        ["axesareweapons.${project.name}.mixins.json", "fabric.mod.json", "META-INF/mods.toml"].each {
-            filesMatching(it) {
-                expand(stringProperties) {
-                    escapeBackslash = true
-                }
+        filesMatching(["*.mixins.json", "*.mod.json*", "META-INF/*mods.toml"]) {
+            expand(stringProperties) {
+                escapeBackslash = true
             }
         }
     }
@@ -77,52 +84,50 @@ subprojects {
     apply plugin: "com.modrinth.minotaur"
 
     modrinth {
-        def MODRINTH_TOKEN = System.getenv("MODRINTH_TOKEN")
-        if (MODRINTH_TOKEN != null) {
-            token = MODRINTH_TOKEN
-            projectId = project.modrinth_id
-            versionName = project.mod_version
-            versionNumber = project.version
-            versionType = "release"
-            uploadFile = remapJar
-            changelog = changesMd
-            gameVersions = projectGameVersions
-            loaders = [loader]
-            dependencies {
-                toList(project.modrinth_dependencies).each{ required.project(it) }
-            }
+        token = System.getenv("MODRINTH_TOKEN")
+        projectId = project.modrinth_id
+        versionName = project.mod_version
+        versionNumber = project.version
+        versionType = "release"
+        uploadFile = remapJar
+        changelog = changesMd
+        gameVersions = projectGameVersions
+        loaders = [loader]
+        dependencies {
+            toList(project.modrinth_dependencies).each{ required.project(it) }
         }
     }
 
     apply plugin: "com.matthewprenger.cursegradle"
 
     curseforge {
-        def CURSEFORGE_TOKEN = System.getenv("CURSEFORGE_TOKEN")
-        if (CURSEFORGE_TOKEN != null) {
-            apiKey = CURSEFORGE_TOKEN
-            project {
-                id = project.curseforge_id
-                releaseType = "release"
-                changelogType = "markdown"
-                changelog = changesMd
+        def token = System.getenv("CURSEFORGE_TOKEN")
+        if (token != null) {
+            apiKey = token
+        }
 
-                addGameVersion capitalizedLoader
-                projectGameVersions.each{ addGameVersion(it) }
+        project {
+            id = project.curseforge_id
+            releaseType = "release"
+            changelogType = "markdown"
+            changelog = changesMd
 
-                relations {
-                    toList(project.curseforge_dependencies).each{ requiredDependency(it) }
-                }
-                mainArtifact(remapJar.archiveFile.get().asFile) {
-                    displayName = "${project.mod_version} [${capitalizedLoader} ${versionRange(projectGameVersions)}]"
-                }
-                afterEvaluate {
-                    uploadTask.dependsOn("build")
-                }
+            addGameVersion capitalizedLoader
+            projectGameVersions.each{ addGameVersion(it) }
+
+            relations {
+                toList(project.curseforge_dependencies).each{ requiredDependency(it) }
             }
-            options {
-                forgeGradleIntegration = false
-                javaVersionAutoDetect = false
+            mainArtifact(remapJar.archiveFile.get().asFile) {
+                displayName = "${project.mod_version} [${capitalizedLoader} ${versionRange(projectGameVersions)}]"
             }
+            afterEvaluate {
+                uploadTask.dependsOn("build")
+            }
+        }
+        options {
+            forgeGradleIntegration = false
+            javaVersionAutoDetect = false
         }
     }
 

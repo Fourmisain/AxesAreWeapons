@@ -18,7 +18,7 @@ public abstract class LuckEnchantmentMixin extends Enchantment {
 	}
 
 	@Inject(method = "canAccept(Lnet/minecraft/enchantment/Enchantment;)Z", at = @At("HEAD"), cancellable = true)
-	public void allowSilkTouchWithLooting(Enchantment other, CallbackInfoReturnable<Boolean> cir) {
+	public void axesareweapons$allowSilkTouchWithLooting(Enchantment other, CallbackInfoReturnable<Boolean> cir) {
 		if (AxesAreWeaponsCommon.CONFIG.allowSilkTouchWithLooting) {
 			if (this == Enchantments.LOOTING && other == Enchantments.SILK_TOUCH) {
 				cir.setReturnValue(true);
