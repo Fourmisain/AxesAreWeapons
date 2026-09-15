@@ -2,7 +2,7 @@ plugins {
     id "dev.architectury.loom-no-remap" version "1.17-SNAPSHOT" apply false
     id "architectury-plugin" version "3.5-SNAPSHOT"
     id "com.gradleup.shadow" version "9.4.+" apply false
-    id "com.matthewprenger.cursegradle" version "1.4.0" apply false
+    id 'de.maxhenkel.cursegradle' version '1.5.+' apply false
     id "com.modrinth.minotaur" version "2.+" apply false
     id "minepkg-publish" version "latest.release" apply false
 }
@@ -121,7 +121,7 @@ subprojects {
         archiveClassifier = null           // shadowJar becomes the main artifact
     }
 
-    apply plugin: "com.modrinth.minotaur"
+    apply plugin: 'com.modrinth.minotaur'
 
     modrinth {
         token = System.getenv("MODRINTH_TOKEN")
@@ -139,7 +139,7 @@ subprojects {
         }
     }
 
-    apply plugin: "com.matthewprenger.cursegradle"
+    apply plugin: 'de.maxhenkel.cursegradle'
 
     curseforge {
         def token = System.getenv("CURSEFORGE_TOKEN")
@@ -155,6 +155,8 @@ subprojects {
 
             addGameVersion capitalizedLoader
             projectGameVersions.each{ addGameVersion(it) }
+            addGameVersion 'Client'
+            addGameVersion 'Server'
 
             relations {
                 toList(project.curseforge_dependencies).each{ requiredDependency(it) }
