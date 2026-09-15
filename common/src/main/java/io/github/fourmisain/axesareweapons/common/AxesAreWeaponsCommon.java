@@ -94,10 +94,10 @@ public class AxesAreWeaponsCommon {
 	public static boolean isWeapon(Item item, boolean checkTags) {
 		var entry = item.builtInRegistryHolder();
 
-		return item instanceof AxeItem
-			|| (CONFIG.shovelsAreWeapons && (item instanceof ShovelItem || (checkTags && entry.is(ItemTags.SHOVELS))))
-			|| (CONFIG.hoesAreWeapons && (item instanceof HoeItem || (checkTags && entry.is(ItemTags.HOES))))
-			|| (CONFIG.pickaxesAreWeapons && checkTags && entry.is(ItemTags.PICKAXES))
+		return (checkTags && entry.is(ItemTags.AXES))
+			|| (CONFIG.shovelsAreWeapons && (checkTags && entry.is(ItemTags.SHOVELS)))
+			|| (CONFIG.hoesAreWeapons && (checkTags && entry.is(ItemTags.HOES)))
+			|| (CONFIG.pickaxesAreWeapons && (checkTags && entry.is(ItemTags.PICKAXES)))
 			|| (CONFIG.rangedWeaponsAreWeapons && item instanceof ProjectileWeaponItem)
 			|| CONFIG.weaponIds.contains(BuiltInRegistries.ITEM.getKey(item));
 	}
