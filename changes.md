@@ -1,3 +1,7 @@
+## 1.11.0
+
+- port to 26.3
+
 ## 1.10.2
 
 - fix modded sword enchants appearing in the Enchanting Table or on loot even with "Enable the above in the Enchanting Table too" off and even if they are not primary for swords
